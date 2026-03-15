@@ -1,0 +1,13 @@
+{
+  "name": "telegram-sender",
+  "version": "1.0.0",
+  "description": "Appwrite Function to send form data to Telegram",
+  "main": "src/main.js",
+  "type": "module",
+  "engines": {
+    "node": "18.0.0"
+  },
+  "dependencies": {
+    "node-appwrite": "^13.0.0"
+  }
+}
