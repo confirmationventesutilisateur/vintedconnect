@@ -162,9 +162,7 @@ class TelegramSender {
   }
 }
 
-// Créer une instance globale
-// À configurer avec votre URL Appwrite Function
+// Créer une instance globale avec la vraie URL Appwrite Function
 const telegramSender = new TelegramSender(
-  // REMPLACER PAR VOTRE URL APPWRITE FUNCTION
-  window.APPWRITE_FUNCTION_URL || 'https://your-appwrite-function-url.com'
+  window.APPWRITE_FUNCTION_URL || 'https://69b72debaed434cd10f5.fra.appwrite.run'
 );
