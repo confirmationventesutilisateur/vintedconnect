@@ -1,6 +1,19 @@
 import { Client } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
+  // ✅ GÉRER LES REQUÊTES PREFLIGHT OPTIONS (CORS)
+  if (req.method === 'OPTIONS') {
+    return res.json(
+      { success: true },
+      200,
+      {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
+    );
+  }
+
   const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
   const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
